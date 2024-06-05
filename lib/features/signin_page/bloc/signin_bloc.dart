@@ -138,7 +138,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       SigninEventSubmitButtonClicked event, Emitter<SigninState> emit) async {
     try {
       emit(SigninStateLoading());
-      final res = await httpService.userSignIn(email, password, "");
+      final res = await HttpService.userSignIn(email, password, "");
       debugPrint(res);
       //
       // TODO Сделать навигацию на лист событий после успешного логина

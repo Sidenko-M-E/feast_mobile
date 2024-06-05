@@ -1,7 +1,8 @@
-import 'package:feast_mobile_email/features/signin_page/ui/signin_page_state_manager.dart';
-import 'package:feast_mobile_email/services/http_service.dart';
+import 'package:feast_mobile_email/events_view_model.dart';
+import 'package:feast_mobile_email/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(FeastMobileApp());
@@ -12,13 +13,47 @@ class FeastMobileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => HttpService(),
-      child: MaterialApp(
-        theme: ThemeData(platform: TargetPlatform.android),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => EventViewModel()),
+      ],
+      child: MaterialApp.router(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en'),
+          Locale('ru'),
+        ],
+        theme:
+            ThemeData(platform: TargetPlatform.android, textTheme: textTheme),
         debugShowCheckedModeBanner: false,
-        home: SigninPage(),
+        routerConfig: goRouter,
       ),
     );
   }
 }
+
+TextTheme textTheme = TextTheme(
+    labelSmall: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: Colors.grey,
+    ),
+    labelMedium: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: Colors.black,
+    ),
+    labelLarge: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: Colors.black,
+    ),
+    titleMedium: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+      color: Colors.black,
+    ));

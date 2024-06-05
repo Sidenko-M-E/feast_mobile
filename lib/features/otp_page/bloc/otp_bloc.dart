@@ -26,7 +26,6 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
 
   OtpBloc({required this.user}) : super(OtpStateLoading()) {
     otpService = OTPService();
-    httpService = HttpService();
     secondsLeft = otpRequestCooldown;
     codeError = null;
     enteredCode = '';
@@ -105,7 +104,7 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
       case OtpVerificationError.None:
         try {
           emit(OtpStateLoading());
-          user.accessToken = await httpService.userSignUp(
+          user.accessToken = await HttpService.userSignUp(
               user.name, user.email, user.password, "");
           emit(OtpStateSignUpSuccess(user: user));
         } on SignUpException {

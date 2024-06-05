@@ -1,9 +1,9 @@
 import 'package:feast_mobile_email/features/signin_page/bloc/signin_bloc.dart';
 import 'package:feast_mobile_email/features/signin_page/ui/signin_page_layout.dart';
-import 'package:feast_mobile_email/features/signup_page/ui/signup_page_state_manager.dart';
 import 'package:feast_mobile_email/services/http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../widgets/signin_alert_dialog.dart';
 
@@ -30,8 +30,7 @@ class _SigninPageState extends State<SigninPage> {
                     builder: (BuildContext context) =>
                         SigninAlertDialog(state: state as SigninStateAlert));
               case SigninStateGoToSignup:
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SignUpPage()));
+                context.go('/signup');
             }
           },
           buildWhen: (previous, current) => (current is SigninStateToRebuild),

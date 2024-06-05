@@ -49,3 +49,4 @@ launch.json
 .metadata
 analysis_options.yaml
 ticker.dart
+.vscode

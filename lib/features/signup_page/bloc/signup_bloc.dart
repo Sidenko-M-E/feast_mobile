@@ -148,7 +148,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       SignupEventSubmitButtonClicked event, Emitter<SignupState> emit) async {
     try {
       emit(SignupStateLoading());
-      await httpService.userCheck(name, email, password, "");
+      await HttpService.userCheck(name, email, password, "");
       emit(SignupStateToRebuild());
       emit(SignupStateGoToOTP(
           user: User(
