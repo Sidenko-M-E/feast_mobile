@@ -1,10 +1,12 @@
 class User {
-  User(
-      {required this.name,
-      required this.email,
-      this.phone,
-      required this.password,
-      required this.accessToken});
+  User(this.name, this.email, this.phone, this.password, this.accessToken);
+
+  User.empty()
+      : name = '',
+        email = '',
+        phone = '',
+        password = '',
+        accessToken = '';
 
   String name;
   String email;

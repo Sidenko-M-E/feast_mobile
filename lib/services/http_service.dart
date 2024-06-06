@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:feast_mobile_email/models/category.dart';
 import 'package:feast_mobile_email/models/event.dart';
-import 'package:flutter/material.dart';
+import 'package:feast_mobile_email/models/filters.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/filters.dart';
+import 'package:http/http.dart';
 
 abstract class HttpService {
   static const Duration timeoutDuration = Duration(seconds: 5);
@@ -16,22 +16,20 @@ abstract class HttpService {
       'end': filters.end,
       'age': '${filters.age}',
     };
-    List<int> catIds = filters.categories.map((CategoryModel cat) => cat.id).toList();
+    List<int> catIds =
+        filters.categories.map((CategoryModel cat) => cat.id).toList();
     if (catIds.length > 0) params.addAll({'catIds': '${catIds.join(',')}'});
 
-    Uri url = Uri.http(baseUrl, 'event', params);
-    final res = await http.get(url).timeout(timeoutDuration);
+    final res = await http
+        .get(Uri.http(baseUrl, '/event', params))
+        .timeout(timeoutDuration);
 
-    if (res.statusCode == 200) {
-      final List<Event> events;
-      events = List<Event>.from(json
+    if (res.statusCode == 200)
+      return List<Event>.from(json
           .decode(utf8.decode(res.bodyBytes))
           .map((model) => Event.fromJson(model)));
-      debugPrint(events.toString());
-      return events;
-    }
-
-    return [];
+    else
+      throw InternalException();
   }
 
   static Future<List<CategoryModel>> getCategories() async {
@@ -42,26 +40,26 @@ abstract class HttpService {
       return List<CategoryModel>.from(json
           .decode(utf8.decode(res.bodyBytes))
           .map((model) => CategoryModel.fromJson(model)));
-
-    return [];
+    else
+      throw InternalException();
   }
 
-  static Future<CategoryModel?> getCategoryById(int id) async {
-    final res = await http
-        .get(Uri.http(baseUrl, '/category/$id'))
-        .timeout(timeoutDuration);
+  // static Future<CategoryModel?> getCategoryById(int id) async {
+  //   final res = await http
+  //       .get(Uri.http(baseUrl, '/category/$id'))
+  //       .timeout(timeoutDuration);
 
-    if (res.statusCode == 200)
-      return CategoryModel.fromJson(json.decode(utf8.decode(res.bodyBytes)));
-
-    return null;
-  }
+  //   if (res.statusCode == 200)
+  //     return CategoryModel.fromJson(json.decode(utf8.decode(res.bodyBytes)));
+  //   //TODO handle code 404 and 500
+  //   else
+  //     return null;
+  // }
 
   static Future<String> userSignIn(
       String email, String password, String notificationToken) async {
-    final url = Uri.http(baseUrl, '/user/signin');
-    final response = await http
-        .post(url,
+    final Response response = await http
+        .post(Uri.http(baseUrl, '/user/signin'),
             headers: {'Content-Type': 'application/json'},
             body: jsonEncode(<String, String?>{
               "email": "$email",
@@ -70,22 +68,20 @@ abstract class HttpService {
             }))
         .timeout(timeoutDuration);
 
-    if (response.statusCode == 200) {
-      final body = jsonDecode(response.body) as Map<String, dynamic>;
-      return body['accessToken'];
-    } else if (response.statusCode == 401) {
-      throw SignInException("401");
-    } else if (response.statusCode == 404) {
-      throw SignInException("404");
-    }
-    throw Exception("");
+    if (response.statusCode == 200)
+      return (jsonDecode(response.body) as Map<String, dynamic>)['accessToken'];
+    else if (response.statusCode == 401)
+      throw SignInException(SignInFailure.WrongPassword);
+    else if (response.statusCode == 404)
+      throw SignInException(SignInFailure.EmailAlreadyTaken);
+    else
+      throw InternalException();
   }
 
-  static Future<String> userCheck(String name, String email, String password,
+  static Future<void> userCheck(String name, String email, String password,
       String notificationToken) async {
-    final url = Uri.http(baseUrl, '/user/check');
     final response = await http
-        .post(url,
+        .post(Uri.http(baseUrl, '/user/check'),
             headers: {'Content-Type': 'application/json'},
             body: jsonEncode(<String, String?>{
               "name": '$name',
@@ -96,23 +92,21 @@ abstract class HttpService {
         .timeout(timeoutDuration);
 
     if (response.statusCode == 200) {
-      return "";
+      return;
     } else if (response.statusCode == 409) {
-      final body = jsonDecode(response.body) as Map<String, dynamic>;
-      final msg = body["code"];
-      if (msg == 'EMAIL_ALREADY_EXISTS') {
-        throw SignUpException();
-      } else
-        throw Exception('Error in signUp');
-    }
-    throw Exception('Error in signUp');
+      final msg = (jsonDecode(response.body) as Map<String, dynamic>)['code'];
+      if (msg == 'EMAIL_ALREADY_EXISTS')
+        throw SignUpException(SignUpFailure.EmailAlreadyExists);
+      else
+        throw SignUpException(SignUpFailure.PhoneAlreadyExists);
+    } else
+      throw InternalException();
   }
 
   static Future<String> userSignUp(String name, String email, String password,
       String notificationToken) async {
-    final url = Uri.http(baseUrl, '/user/signup');
     final response = await http
-        .post(url,
+        .post(Uri.http(baseUrl, '/user/signup'),
             headers: {'Content-Type': 'application/json'},
             body: jsonEncode(<String, String?>{
               "name": "$name",
@@ -123,24 +117,37 @@ abstract class HttpService {
             }))
         .timeout(timeoutDuration);
 
-    if (response.statusCode == 200) {
-      final body = jsonDecode(response.body) as Map<String, dynamic>;
-      return body['accessToken'];
-    } else if (response.statusCode == 409) {
-      final body = jsonDecode(response.body) as Map<String, dynamic>;
-      final msg = body["code"];
+    if (response.statusCode == 200)
+      return (jsonDecode(response.body) as Map<String, dynamic>)['accessToken'];
+    else if (response.statusCode == 409) {
+      final msg = (jsonDecode(response.body) as Map<String, dynamic>)["code"];
       if (msg == 'EMAIL_ALREADY_EXISTS') {
-        throw SignUpException();
+        throw SignUpException(SignUpFailure.EmailAlreadyExists);
       } else
-        throw Exception('Error in signUp');
+        throw SignUpException(SignUpFailure.PhoneAlreadyExists);
     }
-    throw Exception('Error in signUp');
+    throw InternalException();
   }
 }
 
 class SignInException implements Exception {
-  SignInException(this.statusCode);
-  String statusCode;
+  SignInException(this.type);
+  SignInFailure type;
 }
 
-class SignUpException implements Exception {}
+enum SignInFailure {
+  WrongPassword,
+  EmailAlreadyTaken,
+}
+
+class SignUpException implements Exception {
+  SignUpException(this.type);
+  SignUpFailure type;
+}
+
+enum SignUpFailure {
+  EmailAlreadyExists,
+  PhoneAlreadyExists,
+}
+
+class InternalException implements Exception {}

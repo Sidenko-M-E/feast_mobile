@@ -1,8 +1,11 @@
-import 'package:feast_mobile_email/events_view_model.dart';
+import 'package:feast_mobile_email/view_models/auth_view_model.dart';
+import 'package:feast_mobile_email/view_models/events_view_model.dart';
 import 'package:feast_mobile_email/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'text_theme.dart';
 
 void main() {
   runApp(FeastMobileApp());
@@ -16,6 +19,7 @@ class FeastMobileApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => EventViewModel()),
+        ChangeNotifierProvider(create: (_) => AuthVM()),
       ],
       child: MaterialApp.router(
         localizationsDelegates: [
@@ -35,25 +39,3 @@ class FeastMobileApp extends StatelessWidget {
     );
   }
 }
-
-TextTheme textTheme = TextTheme(
-    labelSmall: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: Colors.grey,
-    ),
-    labelMedium: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: Colors.black,
-    ),
-    labelLarge: TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: Colors.black,
-    ),
-    titleMedium: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w500,
-      color: Colors.black,
-    ));

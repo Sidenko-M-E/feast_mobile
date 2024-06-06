@@ -1,9 +1,17 @@
-import 'package:feast_mobile_email/features/event_details_page.dart/event_details_page.dart';
-import 'package:feast_mobile_email/features/event_list_page/event_list_page.dart';
-import 'package:feast_mobile_email/features/filters_page/filters_page.dart';
+import 'package:feast_mobile_email/features/event_view/event_details_page.dart/event_details_page.dart';
+import 'package:feast_mobile_email/features/event_view/event_list_page/event_list_page.dart';
+
+import 'package:feast_mobile_email/features/auth/profile_base_page/profile_base_page.dart';
+import 'package:feast_mobile_email/features/auth/signin_page/signin_page.dart';
+import 'package:feast_mobile_email/features/event_view/filters_page/filters_page.dart';
+
 import 'package:feast_mobile_email/features/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+final rootNavigatorKey = GlobalKey<NavigatorState>();
+final shellNavigatorKeyEvents = GlobalKey<NavigatorState>();
+final shellNavigatorKeyProfile = GlobalKey<NavigatorState>();
 
 GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
   GoRoute(
@@ -35,11 +43,38 @@ GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
               pageBuilder: (context, state) =>
                   NoTransitionPage(child: TestPage()))
         ]),
-        StatefulShellBranch(routes: [
+        StatefulShellBranch(navigatorKey: shellNavigatorKeyProfile, routes: [
           GoRoute(
               path: '/profile',
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: TestPage()))
+                  NoTransitionPage(child: ProfileBasePage()),
+              routes: [
+                GoRoute(
+                    //TODO сделать страницу настроек профиля
+                    path: 'settings',
+                    pageBuilder: (context, state) =>
+                        NoTransitionPage(child: TestPage())),
+                GoRoute(
+                    path: 'signin',
+                    pageBuilder: (context, state) =>
+                        NoTransitionPage(child: SigninPage())),
+                GoRoute(
+                    path: 'signup',
+                    pageBuilder: (context, state) =>
+                        NoTransitionPage(child: TestPage()),
+                    routes: [
+                      GoRoute(
+                          path: 'otp',
+                          pageBuilder: (context, state) =>
+                              NoTransitionPage(child: TestPage()),
+                          routes: [
+                            GoRoute(
+                                path: 'success',
+                                pageBuilder: (context, state) =>
+                                    NoTransitionPage(child: TestPage()))
+                          ]),
+                    ])
+              ])
         ])
       ])
 ]);
