@@ -1,9 +1,9 @@
-import 'package:feast_mobile_email/features/auth/signin_page/signin_page_layout.dart';
+import 'package:feast_mobile_email/features/auth/signin_page/ui/signin_page_layout.dart';
 import 'package:feast_mobile_email/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/auth_alert_dialog.dart';
+import '../../widgets/auth_alert_dialog.dart';
 
 class SigninPage extends StatelessWidget {
   const SigninPage({super.key});

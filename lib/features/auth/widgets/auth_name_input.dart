@@ -34,6 +34,8 @@ class AuthNameInput extends StatelessWidget {
         Focus(
           onFocusChange: onFocusChange,
           child: TextFormField(
+            initialValue: initialValue,
+            onChanged: onChanged,
             onFieldSubmitted: onFieldSubmitted,
             keyboardType: TextInputType.emailAddress,
             inputFormatters: [
@@ -46,7 +48,7 @@ class AuthNameInput extends StatelessWidget {
               filled: true,
               fillColor: errorText != null ? Colors.red[100] : Colors.white,
               hintText: "Введите ваше имя",
-              hintStyle: Theme.of(context).textTheme.bodySmall,
+              hintStyle: Theme.of(context).textTheme.labelSmall,
               counterStyle: TextStyle(fontSize: 0),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(

@@ -1,4 +1,3 @@
-import 'package:feast_mobile_email/constraints.dart';
 import 'package:flutter/material.dart';
 
 class OtpEmailLabelError extends StatelessWidget {
@@ -24,7 +23,7 @@ class OtpEmailLabelError extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
-                color: Colors.grey[700],
+                color: Colors.grey.shade700,
               ),
               text: 'на',
             ),
@@ -33,7 +32,7 @@ class OtpEmailLabelError extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
-                color: mainBlue,
+                color: Colors.blue,
               ),
               text: '${email}',
             ),

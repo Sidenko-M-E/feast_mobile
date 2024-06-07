@@ -1,4 +1,3 @@
-import 'package:feast_mobile_email/constraints.dart';
 import 'package:flutter/material.dart';
 
 class OtpEmailLabel extends StatelessWidget {
@@ -31,7 +30,7 @@ class OtpEmailLabel extends StatelessWidget {
             const WidgetSpan(child: SizedBox(width: 5)),
             TextSpan(
               style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.w700, color: mainBlue),
+                  fontSize: 14, fontWeight: FontWeight.w700, color: Colors.blue),
               text: '${email}',
             ),
           ]),

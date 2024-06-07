@@ -1,6 +1,7 @@
 import 'package:feast_mobile_email/view_models/auth_view_model.dart';
 import 'package:feast_mobile_email/view_models/events_view_model.dart';
 import 'package:feast_mobile_email/routes/routes.dart';
+import 'package:feast_mobile_email/view_models/otp_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -20,6 +21,7 @@ class FeastMobileApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => EventViewModel()),
         ChangeNotifierProvider(create: (_) => AuthVM()),
+        ChangeNotifierProvider(create: (_) => OtpVM()),
       ],
       child: MaterialApp.router(
         localizationsDelegates: [

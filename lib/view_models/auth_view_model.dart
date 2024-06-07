@@ -5,6 +5,8 @@ import 'package:feast_mobile_email/models/user.dart';
 import 'package:feast_mobile_email/services/http_service.dart';
 import 'package:flutter/material.dart';
 
+enum AuthMode { Signup, Singin }
+
 class AuthVM extends ChangeNotifier {
   final RegExp _emailRegExp = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -12,10 +14,12 @@ class AuthVM extends ChangeNotifier {
   final RegExp _passwordRegExp = RegExp(
       r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?^&])[A-Za-z\d@$!%*#?^&]{3,}$');
 
+  late AuthMode authMode;
   User user = User.empty();
   bool loading = false;
   String? emailError = null;
   String? passwordError = null;
+  String? nameError = null;
   bool canContinue = false;
   bool passwordObscured = true;
   ErrorMessage? errorMessage = null;
@@ -39,6 +43,7 @@ class AuthVM extends ChangeNotifier {
 
   emailChanged(String? newVal) {
     if (newVal != null) user.email = newVal;
+    canContinue = true;
     if (user.email == '') {
       emailError = "Заполните поле";
       canContinue = false;
@@ -47,16 +52,21 @@ class AuthVM extends ChangeNotifier {
       canContinue = false;
     } else {
       emailError = null;
-      if (passwordError != null || user.password == '')
-        canContinue = false;
-      else
-        canContinue = true;
+      if (authMode == AuthMode.Singin) {
+        if (passwordError != null || user.password == '') canContinue = false;
+      } else {
+        if (passwordError != null ||
+            user.password == '' ||
+            nameError != null ||
+            user.name == '') canContinue = false;
+      }
     }
     notifyListeners();
   }
 
   passwordChanged(String? newVal) {
     if (newVal != null) user.password = newVal;
+    canContinue = true;
     if (user.password == '') {
       passwordError = "Заполните поле";
       canContinue = false;
@@ -73,10 +83,34 @@ class AuthVM extends ChangeNotifier {
         passwordError = 'Добавьте: ' + additions.join(', ');
       else
         passwordError = 'Уберите некорректные символы';
+
       canContinue = false;
     } else {
       passwordError = null;
-      if (emailError != null || user.email == '')
+      if (authMode == AuthMode.Singin) {
+        if (emailError != null || user.email == '') canContinue = false;
+      } else {
+        if (emailError != null ||
+            user.email == '' ||
+            nameError != null ||
+            user.name == '') canContinue = false;
+      }
+    }
+    notifyListeners();
+  }
+
+  nameChanged(String? newVal) {
+    if (newVal != null) user.name = newVal;
+
+    if (user.name.length < 2) {
+      nameError = "Введите больше одного символа";
+      canContinue = false;
+    } else {
+      nameError = null;
+      if (emailError != null ||
+          user.email == '' ||
+          passwordError != null ||
+          user.password == '')
         canContinue = false;
       else
         canContinue = true;
@@ -94,11 +128,13 @@ class AuthVM extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signin() async {
+  Future<bool> signin() async {
     try {
       setLoading();
       user.accessToken = await HttpService.userSignIn(
           user.email, user.password, user.accessToken);
+      setLoading();
+      return true;
     } on SignInException catch (e) {
       if (e.type == SignInFailure.WrongPassword) {
         passwordError = 'Неверный пароль';
@@ -107,23 +143,69 @@ class AuthVM extends ChangeNotifier {
         emailError = 'Такой email не зарегистрирован';
         canContinue = false;
       }
+      setLoading();
+      return false;
     } on TimeoutException catch (_) {
       setErrorMessage(ErrorMessage(
         title: 'Ошибка связи',
         description: 'Слабое интернет-соединение',
       ));
+      setLoading();
+      return false;
     } on SocketException catch (_) {
       setErrorMessage(ErrorMessage(
         title: 'Ошибка связи',
         description: 'Проверьте интернет-соединение',
       ));
+      setLoading();
+      return false;
     } on Exception catch (_) {
       setErrorMessage(ErrorMessage(
         title: 'Неизвестная ошибка',
         description: 'Попробуйте позже',
       ));
-    } finally {
       setLoading();
+      return false;
+    }
+  }
+
+  Future<bool> usercheck() async {
+    try {
+      setLoading();
+      await HttpService.userCheck(
+          user.name, user.email, user.password, user.accessToken);
+      setLoading();
+      return (true);
+    } on SignUpException catch (e) {
+      if (e.type == SignUpFailure.EmailAlreadyExists) {
+        emailError = 'Email занят';
+        canContinue = false;
+      } else if (e.type == SignUpFailure.PhoneAlreadyExists) {
+        //TODO Если такой телефон уже существует
+      }
+      setLoading();
+      return false;
+    } on TimeoutException catch (_) {
+      setErrorMessage(ErrorMessage(
+        title: 'Ошибка связи',
+        description: 'Слабое интернет-соединение',
+      ));
+      setLoading();
+      return false;
+    } on SocketException catch (_) {
+      setErrorMessage(ErrorMessage(
+        title: 'Ошибка связи',
+        description: 'Проверьте интернет-соединение',
+      ));
+      setLoading();
+      return false;
+    } on Exception catch (_) {
+      setErrorMessage(ErrorMessage(
+        title: 'Неизвестная ошибка',
+        description: 'Попробуйте позже',
+      ));
+      setLoading();
+      return false;
     }
   }
 }

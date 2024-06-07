@@ -2,27 +2,36 @@
 import 'package:flutter/material.dart';
 
 TextTheme textTheme = TextTheme(
-    labelSmall: TextStyle(
+    labelSmall: 
+    TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w400,
       color: Colors.grey,
     ),
-    labelMedium: TextStyle(
+
+    labelMedium: 
+    TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
-    labelLarge: TextStyle(
+
+    labelLarge: 
+    TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w500,
       color: Colors.black,
     ),
-    titleMedium: TextStyle(
+
+    titleMedium: 
+    TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w500,
       color: Colors.black,
     ),
-    titleLarge: TextStyle(
+
+    titleLarge: 
+    TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.w500,
       color: Colors.black,

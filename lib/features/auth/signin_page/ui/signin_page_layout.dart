@@ -3,11 +3,10 @@ import 'package:feast_mobile_email/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/auth_email_input.dart';
-import '../widgets/auth_password_input.dart';
-import '../widgets/auth_sumbit_button.dart';
-import 'widgets/signin_goto_signup_button.dart';
-
+import '../../widgets/auth_email_input.dart';
+import '../../widgets/auth_password_input.dart';
+import '../../widgets/auth_sumbit_button.dart';
+import '../widgets/signin_goto_signup_button.dart';
 
 class SigninPageLayout extends StatelessWidget {
   const SigninPageLayout({super.key});
@@ -24,7 +23,8 @@ class SigninPageLayout extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              //TODO leading tap
+              authVM.clearFields();
+              goRouter.go('/profile');
             },
           ),
         ),
@@ -74,12 +74,15 @@ class SigninPageLayout extends StatelessWidget {
                     },
                   ),
                   Expanded(child: Container()),
-                  SubmitButton(
+                  AuthSubmitButton(
                     label: 'Войти',
                     isEnabled: authVM.canContinue,
                     onPressed: () async {
                       if (authVM.canContinue) {
-                        await authVM.signin();
+                        if (await authVM.signin()) {
+                          debugPrint(authVM.user.accessToken);
+                          goRouter.go('/profile/signin/success');
+                        }
                       }
                     },
                   ),
@@ -87,6 +90,7 @@ class SigninPageLayout extends StatelessWidget {
                   SigninGoToSignupButton(
                     onPressed: () {
                       authVM.clearFields();
+                      authVM.authMode = AuthMode.Signup;
                       goRouter.go('/profile/signup');
                     },
                   )

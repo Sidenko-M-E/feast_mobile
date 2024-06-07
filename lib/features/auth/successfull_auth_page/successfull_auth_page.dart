@@ -1,14 +1,14 @@
 import 'package:feast_mobile_email/constraints.dart';
-import 'package:feast_mobile_email/models/user.dart';
 import 'package:flutter/material.dart';
+// import 'package:feast_mobile_email/view_models/auth_view_model.dart';
+// import 'package:provider/provider.dart';
 
-class SuccessfullSignUpPage extends StatelessWidget {
-  const SuccessfullSignUpPage({super.key, required this.user});
-
-  final User user;
+class SuccessfullAuthPage extends StatelessWidget {
+  const SuccessfullAuthPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // final authVM = context.watch<AuthVM>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: authBackground,
@@ -33,7 +33,7 @@ class SuccessfullSignUpPage extends StatelessWidget {
             Image.asset('assets/png/house_color.png'),
             SizedBox(height: 30),
             Text(
-              'Вы успешно зарегистрированы',
+              'Вы успешно вошли в систему',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,

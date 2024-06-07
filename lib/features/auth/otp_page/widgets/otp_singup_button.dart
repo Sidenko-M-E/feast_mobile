@@ -1,11 +1,10 @@
-import 'package:feast_mobile_email/features/auth/otp_page/bloc/otp_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OtpSignUpButton extends StatelessWidget {
-  const OtpSignUpButton({super.key, required this.enabled});
+  const OtpSignUpButton({super.key, required this.enabled, this.onPressed});
 
   final bool enabled;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +17,7 @@ class OtpSignUpButton extends StatelessWidget {
           textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
           minimumSize: const Size.fromHeight(50),
         ),
-        onPressed: () {
-          if (enabled)
-            BlocProvider.of<OtpBloc>(context).add(OtpSignUpButtonClicked());
-        },
+        onPressed: onPressed,
         child: const Text('Отправить'));
   }
 }

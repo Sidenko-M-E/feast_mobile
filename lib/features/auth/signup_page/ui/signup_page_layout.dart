@@ -1,67 +1,121 @@
-
-import 'package:feast_mobile_email/features/auth/signup_page/bloc/signup_bloc.dart';
-import 'package:feast_mobile_email/features/signup_page/widgets/signup_email_input.dart';
 import 'package:feast_mobile_email/features/auth/signup_page/widgets/signup_goto_signin_button.dart';
-import 'package:feast_mobile_email/features/signup_page/widgets/signup_password_input.dart';
-import 'package:feast_mobile_email/features/signup_page/widgets/signup_submit_button.dart';
-import 'package:feast_mobile_email/features/auth/widgets/auth_name_input.dart';
+import 'package:feast_mobile_email/routes/routes.dart';
+import 'package:feast_mobile_email/view_models/auth_view_model.dart';
+import 'package:feast_mobile_email/view_models/otp_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-const Color authBackground = Color.fromARGB(254, 238, 248, 255);
+import '../../widgets/auth_email_input.dart';
+import '../../widgets/auth_name_input.dart';
+import '../../widgets/auth_password_input.dart';
+import '../../widgets/auth_sumbit_button.dart';
 
-class SignupPageLayout extends StatefulWidget {
-  final SignupStateToRebuild widgetState;
-  const SignupPageLayout({super.key, required this.widgetState});
+class SignupPageLayout extends StatelessWidget {
+  const SignupPageLayout({super.key});
 
-  @override
-  State<SignupPageLayout> createState() => _SignupPageLayoutState();
-}
-
-class _SignupPageLayoutState extends State<SignupPageLayout> {
   @override
   Widget build(BuildContext context) {
-    final state = widget.widgetState;
-    return Scaffold(
-      backgroundColor: authBackground,
-      appBar: AppBar(
-        backgroundColor: authBackground,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+    final authVM = context.watch<AuthVM>();
+    final otpVM = context.watch<OtpVM>();
+    return PopScope(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              authVM.clearFields();
+              goRouter.go('/profile');
+            },
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-        child: Column(
-          children: <Widget>[
-            Image.asset('assets/png/house_gray.png'),
-            SizedBox(height: 30),
-            Text(
-              'Регистрация',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-              ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Column(
+              children: <Widget>[
+                Image.asset('assets/png/house_gray.png'),
+                SizedBox(height: 30),
+                Text(
+                  'Регистрация',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                SizedBox(height: 20),
+                AuthNameInput(
+                  initialValue: authVM.user.name,
+                  errorText: authVM.nameError,
+                  onChanged: (newVal) {
+                    authVM.nameChanged(newVal);
+                  },
+                  onFieldSubmitted: (newVal) {
+                    authVM.nameChanged(newVal);
+                  },
+                  onFocusChange: (hasFocus) {
+                    if (!hasFocus) authVM.nameChanged(null);
+                  },
+                ),
+                SizedBox(height: 30),
+                AuthEmailInput(
+                  initialValue: authVM.user.email,
+                  errorText: authVM.emailError,
+                  onChanged: (newVal) {
+                    authVM.emailChanged(newVal);
+                  },
+                  onFieldSubmitted: (newVal) {
+                    authVM.emailChanged(newVal);
+                  },
+                  onFocusChange: (hasFocus) {
+                    if (!hasFocus) authVM.emailChanged(null);
+                  },
+                ),
+                SizedBox(height: 30),
+                AuthPasswordInput(
+                  initialValue: authVM.user.password,
+                  passwordObscured: authVM.passwordObscured,
+                  errorText: authVM.passwordError,
+                  onChanged: (newVal) {
+                    authVM.passwordChanged(newVal);
+                  },
+                  onFieldSubmitted: (newVal) {
+                    authVM.passwordChanged(newVal);
+                  },
+                  onFocusChange: (hasFocus) {
+                    if (!hasFocus) authVM.passwordChanged(null);
+                  },
+                  onPasswordVisibilityChanged: () {
+                    authVM.passwordVisibilityChanged();
+                  },
+                ),
+                SizedBox(height: 30),
+                AuthSubmitButton(
+                    label: 'Зарегистрироваться',
+                    isEnabled: authVM.canContinue,
+                    onPressed: () async {
+                      if (authVM.canContinue) {
+                        if (await authVM.usercheck()) {
+                          debugPrint('successFullCheck');
+                          otpVM.resetData();
+                          otpVM.getUser(authVM.user);
+                          otpVM.requestNewCode();
+                          goRouter.go('/profile/signup/otp');
+                        }
+                      } else {
+                        goRouter.go('/profile/signup/otp');
+                      }
+                    }),
+                SizedBox(height: 10),
+                SignupGoToSigninButton(
+                  onPressed: () {
+                    authVM.clearFields();
+                    authVM.authMode = AuthMode.Singin;
+                    goRouter.go('/profile/signin');
+                  },
+                )
+              ],
             ),
-            SizedBox(height: 20),
-            SignupNameInput(
-              errorText: state.nameError,
-            ),
-            SizedBox(height: 30),
-            SignupEmailInput(
-              errorText: state.emailError,
-            ),
-            SizedBox(height: 30),
-            SignupPasswordInput(
-              isTextObscured: state.isPasswordObscured,
-              errorText: state.passwordError,
-            ),
-            SignupSubmitButton(isEnabled: state.isSignUpEnabled),
-            SizedBox(height: 10),
-            SignupGoToSigninButton()
-          ],
+          ),
         ),
       ),
     );

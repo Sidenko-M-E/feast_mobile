@@ -1,8 +1,11 @@
+import 'package:feast_mobile_email/features/auth/otp_page/ui/otp_page.dart';
+import 'package:feast_mobile_email/features/auth/signup_page/ui/signup_page.dart';
+import 'package:feast_mobile_email/features/auth/successfull_auth_page/successfull_auth_page.dart';
 import 'package:feast_mobile_email/features/event_view/event_details_page.dart/event_details_page.dart';
 import 'package:feast_mobile_email/features/event_view/event_list_page/event_list_page.dart';
 
 import 'package:feast_mobile_email/features/auth/profile_base_page/profile_base_page.dart';
-import 'package:feast_mobile_email/features/auth/signin_page/signin_page.dart';
+import 'package:feast_mobile_email/features/auth/signin_page/ui/signin_page.dart';
 import 'package:feast_mobile_email/features/event_view/filters_page/filters_page.dart';
 
 import 'package:feast_mobile_email/features/test_page.dart';
@@ -57,21 +60,27 @@ GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
                 GoRoute(
                     path: 'signin',
                     pageBuilder: (context, state) =>
-                        NoTransitionPage(child: SigninPage())),
+                        NoTransitionPage(child: SigninPage()),
+                    routes: [
+                      GoRoute(
+                          path: 'success',
+                          pageBuilder: (context, state) =>
+                              NoTransitionPage(child: SuccessfullAuthPage()))
+                    ]),
                 GoRoute(
                     path: 'signup',
                     pageBuilder: (context, state) =>
-                        NoTransitionPage(child: TestPage()),
+                        NoTransitionPage(child: SignupPage()),
                     routes: [
                       GoRoute(
                           path: 'otp',
                           pageBuilder: (context, state) =>
-                              NoTransitionPage(child: TestPage()),
+                              NoTransitionPage(child: OTPPage()),
                           routes: [
                             GoRoute(
                                 path: 'success',
                                 pageBuilder: (context, state) =>
-                                    NoTransitionPage(child: TestPage()))
+                                    NoTransitionPage(child: SuccessfullAuthPage()))
                           ]),
                     ])
               ])

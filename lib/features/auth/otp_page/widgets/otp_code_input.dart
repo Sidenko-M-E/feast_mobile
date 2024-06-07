@@ -1,31 +1,26 @@
-import 'package:feast_mobile_email/constraints.dart';
-import 'package:feast_mobile_email/features/auth/otp_page/bloc/otp_bloc.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpCodeInput extends StatelessWidget {
-  const OtpCodeInput({
-    super.key, 
-
-    this.errorText
-  });
+  const OtpCodeInput(
+      {super.key,
+      this.errorText,
+      this.onCompleted,
+      this.onChanged,
+      required this.enabled});
 
   final String? errorText;
+  final bool enabled;
+  final Function(String)? onCompleted;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const Text("Код",
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              )),
+          Text("Код", style: Theme.of(context).textTheme.labelLarge),
           if (errorText != null)
             Text(errorText!,
                 style: TextStyle(
@@ -33,17 +28,12 @@ class OtpCodeInput extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     fontSize: 12))
         ]),
-        const SizedBox(
-          height: 5,
-        ),
+        const SizedBox(height: 5),
         PinCodeTextField(
+          enabled: enabled,
           length: 4,
-          onCompleted: (value) {
-            BlocProvider.of<OtpBloc>(context).add(OtpCodeComplete(newValue: value));
-          },
-          onChanged: (value) {
-            BlocProvider.of<OtpBloc>(context).add(OtpCodeChanged(newValue: value));
-          },
+          onCompleted: onCompleted,
+          onChanged: onChanged,
           appContext: context,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           animationType: AnimationType.none,
@@ -60,8 +50,9 @@ class OtpCodeInput extends StatelessWidget {
             activeFillColor: Colors.white,
             selectedFillColor: Colors.white,
             inactiveFillColor: Colors.white,
+            disabledColor: Colors.grey[200],
             activeColor: Colors.grey[200],
-            selectedColor: mainBlue,
+            selectedColor: Colors.blue,
             inactiveColor: Colors.grey[200],
           ),
         )

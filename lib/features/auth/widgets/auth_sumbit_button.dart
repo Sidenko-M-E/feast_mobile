@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SubmitButton extends StatelessWidget {
-  const SubmitButton(
+class AuthSubmitButton extends StatelessWidget {
+  const AuthSubmitButton(
       {super.key,
       required this.isEnabled,
       this.onPressed,

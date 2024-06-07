@@ -49,7 +49,7 @@ class AuthPasswordInput extends StatelessWidget {
               filled: true,
               fillColor: errorText != null ? Colors.red[100] : Colors.white,
               hintText: "Введите пароль",
-              hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              hintStyle: Theme.of(context).textTheme.labelSmall,
               suffixIcon: IconButton(
                 icon: passwordObscured
                     ? Icon(Icons.visibility)

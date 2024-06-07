@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:feast_mobile_email/models/category.dart';
 import 'package:feast_mobile_email/models/event.dart';
 import 'package:feast_mobile_email/models/filters.dart';
