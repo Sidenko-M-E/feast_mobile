@@ -101,8 +101,6 @@ class SignupPageLayout extends StatelessWidget {
                           otpVM.requestNewCode();
                           goRouter.go('/profile/signup/otp');
                         }
-                      } else {
-                        goRouter.go('/profile/signup/otp');
                       }
                     }),
                 SizedBox(height: 10),

@@ -1,4 +1,5 @@
 import 'package:easy_image_viewer/easy_image_viewer.dart';
+import 'package:feast_mobile_email/view_models/auth_view_model.dart';
 import 'package:feast_mobile_email/view_models/events_view_model.dart';
 import 'package:feast_mobile_email/models/category.dart';
 import 'package:flutter/gestures.dart';
@@ -12,6 +13,7 @@ class EventDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedEvent = context.watch<EventViewModel>().selectedEvent;
+    final authVM = context.watch<AuthVM>();
 
     return Scaffold(
       appBar: AppBar(

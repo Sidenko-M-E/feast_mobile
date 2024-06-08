@@ -3,10 +3,12 @@ import 'package:mailer/smtp_server.dart';
 
 class EmailService {
   Future<void> sendEmail({required String To, required String OTP}) async {
-    final smtpServer = SmtpServer('smtp.yandex.ru',
-        username: 'polzunov.feast@yandex.ru',
-        password: 'uwbrqirwymblzbgx',
-        port: 25);
+    final smtpServer = SmtpServer(
+      'smtp.yandex.ru',
+      username: 'polzunov.feast@yandex.ru',
+      password: 'uwbrqirwymblzbgx',
+      //port: 25,
+    );
 
     final message = Message()
       ..from = Address('polzunov.feast@yandex.ru', 'Feast Team')
@@ -16,5 +18,4 @@ class EmailService {
 
     await send(message, smtpServer);
   }
-
 }

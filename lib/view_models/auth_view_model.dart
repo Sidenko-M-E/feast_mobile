@@ -208,7 +208,39 @@ class AuthVM extends ChangeNotifier {
       return false;
     }
   }
+
+
+    Future<bool> tokenCheck() async {
+    try {
+      setLoading();
+      final bool res = await HttpService.tokenCheck(user.accessToken);
+      setLoading();
+      return (res);
+    } on TimeoutException catch (_) {
+      setErrorMessage(ErrorMessage(
+        title: 'Ошибка связи',
+        description: 'Слабое интернет-соединение',
+      ));
+      setLoading();
+      return false;
+    } on SocketException catch (_) {
+      setErrorMessage(ErrorMessage(
+        title: 'Ошибка связи',
+        description: 'Проверьте интернет-соединение',
+      ));
+      setLoading();
+      return false;
+    } on Exception catch (_) {
+      setErrorMessage(ErrorMessage(
+        title: 'Неизвестная ошибка',
+        description: 'Попробуйте позже',
+      ));
+      setLoading();
+      return false;
+    }
+  }
 }
+
 
 class ErrorMessage {
   ErrorMessage({required this.title, required this.description});

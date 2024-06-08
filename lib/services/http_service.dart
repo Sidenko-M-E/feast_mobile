@@ -127,6 +127,16 @@ abstract class HttpService {
     }
     throw InternalException();
   }
+
+  static Future<bool> tokenCheck(String accessToken) async {
+    final response = await http
+        .get(Uri.http(baseUrl, '/auth/token/check'))
+        .timeout(timeoutDuration);
+    if (response.statusCode == 200)
+      return true;
+    else
+      return false;
+  }
 }
 
 class SignInException implements Exception {

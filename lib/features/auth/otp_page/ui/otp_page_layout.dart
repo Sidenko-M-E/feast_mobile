@@ -51,7 +51,7 @@ class OtpPageLayout extends StatelessWidget {
                   errorText: otpVM.codeError,
                   onCompleted: (p0) async {
                     if (await otpVM.verifyCode(p0)) {
-                      debugPrint(authVM.user.accessToken);
+                      goRouter.go('/profile/signup/otp/success');
                     }
                   },
                 ),

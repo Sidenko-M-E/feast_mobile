@@ -40,7 +40,15 @@ class OTPService {
     if (OTP.lastUsedTime == 0) return OtpVerificationError.None;
 
     // Истек срок валидности
-    if (OTP.lastUsedTime.compareTo(OTPvalidUntilTime) > 0) return OtpVerificationError.ValidTimesUp;
+    if ((DateTime.now().microsecondsSinceEpoch - OTP.lastUsedTime) >
+        OTPValidTimeInterval * 1000000) {
+      return OtpVerificationError.ValidTimesUp;
+    }
+
+    // if (OTP.lastUsedTime.compareTo(OTPvalidUntilTime) > 0) {
+    //   debugPrint(OTP.lastUsedTime.compareTo(OTPvalidUntilTime).toString());
+    //   return OtpVerificationError.ValidTimesUp;
+    // }
 
     // Неверный код
     if (validOTP.compareTo(otp) != 0) return OtpVerificationError.Invalid;
@@ -49,4 +57,4 @@ class OTPService {
   }
 }
 
-enum OtpVerificationError {None, ValidTimesUp, Invalid}
+enum OtpVerificationError { None, ValidTimesUp, Invalid }
