@@ -1,7 +1,7 @@
-import 'package:feast_mobile_email/features/auth/signup_page/widgets/signup_goto_signin_button.dart';
-import 'package:feast_mobile_email/routes/routes.dart';
-import 'package:feast_mobile_email/view_models/auth_view_model.dart';
-import 'package:feast_mobile_email/view_models/otp_view_model.dart';
+import 'package:feast_mobile/features/auth/signup_page/widgets/signup_goto_signin_button.dart';
+import 'package:feast_mobile/routes/routes.dart';
+import 'package:feast_mobile/view_models/auth_view_model.dart';
+import 'package:feast_mobile/view_models/otp_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

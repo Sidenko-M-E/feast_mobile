@@ -1,6 +1,6 @@
-import 'package:feast_mobile_email/features/auth/otp_page/ui/otp_page_layout.dart';
-import 'package:feast_mobile_email/features/auth/widgets/auth_alert_dialog.dart';
-import 'package:feast_mobile_email/view_models/otp_view_model.dart';
+import 'package:feast_mobile/features/auth/otp_page/ui/otp_page_layout.dart';
+import 'package:feast_mobile/features/auth/widgets/auth_alert_dialog.dart';
+import 'package:feast_mobile/view_models/otp_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

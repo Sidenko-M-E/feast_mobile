@@ -1,4 +1,4 @@
-import 'package:feast_mobile_email/models/category.dart';
+import 'package:feast_mobile/models/category.dart';
 
 
 class Filters {

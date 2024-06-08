@@ -1,6 +1,6 @@
-import 'package:feast_mobile_email/features/event_view/event_list_page/widgets/event_card.dart';
-import 'package:feast_mobile_email/view_models/events_view_model.dart';
-import 'package:feast_mobile_email/models/event.dart';
+import 'package:feast_mobile/features/event_view/event_list_page/widgets/event_card.dart';
+import 'package:feast_mobile/view_models/events_view_model.dart';
+import 'package:feast_mobile/models/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

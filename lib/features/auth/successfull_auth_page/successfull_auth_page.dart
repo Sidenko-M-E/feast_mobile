@@ -1,7 +1,5 @@
-import 'package:feast_mobile_email/constraints.dart';
+import 'package:feast_mobile/constraints.dart';
 import 'package:flutter/material.dart';
-// import 'package:feast_mobile_email/view_models/auth_view_model.dart';
-// import 'package:provider/provider.dart';
 
 class SuccessfullAuthPage extends StatelessWidget {
   const SuccessfullAuthPage({super.key});

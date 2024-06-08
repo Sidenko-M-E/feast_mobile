@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:feast_mobile_email/models/category.dart';
-import 'package:feast_mobile_email/models/event.dart';
-import 'package:feast_mobile_email/models/filters.dart';
+import 'package:feast_mobile/models/category.dart';
+import 'package:feast_mobile/models/event.dart';
+import 'package:feast_mobile/models/filters.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 

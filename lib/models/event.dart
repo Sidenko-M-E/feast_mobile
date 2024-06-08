@@ -1,5 +1,5 @@
-import 'package:feast_mobile_email/models/category.dart';
-import 'package:feast_mobile_email/models/place.dart';
+import 'package:feast_mobile/models/category.dart';
+import 'package:feast_mobile/models/place.dart';
 
 class Event {
   final int id;

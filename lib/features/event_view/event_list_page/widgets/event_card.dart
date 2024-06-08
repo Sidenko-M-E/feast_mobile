@@ -1,4 +1,4 @@
-import 'package:feast_mobile_email/models/event.dart';
+import 'package:feast_mobile/models/event.dart';
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {

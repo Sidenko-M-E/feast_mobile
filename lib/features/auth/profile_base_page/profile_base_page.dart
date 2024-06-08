@@ -1,4 +1,4 @@
-import 'package:feast_mobile_email/features/auth/profile_welcome_page/profile_welcome_page.dart';
+import 'package:feast_mobile/features/auth/profile_welcome_page/profile_welcome_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfileBasePage extends StatelessWidget {

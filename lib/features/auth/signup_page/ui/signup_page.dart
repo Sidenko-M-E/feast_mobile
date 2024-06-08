@@ -1,5 +1,5 @@
-import 'package:feast_mobile_email/features/auth/signup_page/ui/signup_page_layout.dart';
-import 'package:feast_mobile_email/view_models/auth_view_model.dart';
+import 'package:feast_mobile/features/auth/signup_page/ui/signup_page_layout.dart';
+import 'package:feast_mobile/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

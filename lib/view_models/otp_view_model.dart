@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:feast_mobile_email/models/user.dart';
-import 'package:feast_mobile_email/services/email_service.dart';
-import 'package:feast_mobile_email/services/http_service.dart';
-import 'package:feast_mobile_email/services/otp_service.dart';
-import 'package:feast_mobile_email/view_models/auth_view_model.dart';
+import 'package:feast_mobile/models/user.dart';
+import 'package:feast_mobile/services/email_service.dart';
+import 'package:feast_mobile/services/http_service.dart';
+import 'package:feast_mobile/services/otp_service.dart';
+import 'package:feast_mobile/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
 
 const int otpRequestCooldown = 30;

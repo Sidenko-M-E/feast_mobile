@@ -1,7 +1,7 @@
 import 'package:easy_image_viewer/easy_image_viewer.dart';
-import 'package:feast_mobile_email/view_models/auth_view_model.dart';
-import 'package:feast_mobile_email/view_models/events_view_model.dart';
-import 'package:feast_mobile_email/models/category.dart';
+import 'package:feast_mobile/view_models/auth_view_model.dart';
+import 'package:feast_mobile/view_models/events_view_model.dart';
+import 'package:feast_mobile/models/category.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

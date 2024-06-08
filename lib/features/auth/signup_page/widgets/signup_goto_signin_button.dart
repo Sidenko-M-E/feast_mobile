@@ -1,4 +1,4 @@
-import 'package:feast_mobile_email/constraints.dart';
+import 'package:feast_mobile/constraints.dart';
 import 'package:flutter/material.dart';
 
 class SignupGoToSigninButton extends StatelessWidget {

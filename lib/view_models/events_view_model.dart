@@ -1,6 +1,6 @@
-import 'package:feast_mobile_email/models/category.dart';
-import 'package:feast_mobile_email/models/event.dart';
-import 'package:feast_mobile_email/services/http_service.dart';
+import 'package:feast_mobile/models/category.dart';
+import 'package:feast_mobile/models/event.dart';
+import 'package:feast_mobile/services/http_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../models/filters.dart';

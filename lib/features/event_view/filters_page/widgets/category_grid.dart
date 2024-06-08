@@ -1,5 +1,5 @@
-import 'package:feast_mobile_email/view_models/events_view_model.dart';
-import 'package:feast_mobile_email/models/category.dart';
+import 'package:feast_mobile/view_models/events_view_model.dart';
+import 'package:feast_mobile/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

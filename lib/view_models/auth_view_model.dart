@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:feast_mobile_email/models/user.dart';
-import 'package:feast_mobile_email/services/http_service.dart';
+import 'package:feast_mobile/models/user.dart';
+import 'package:feast_mobile/services/http_service.dart';
 import 'package:flutter/material.dart';
 
 enum AuthMode { Signup, Singin }
