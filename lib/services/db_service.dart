@@ -47,7 +47,7 @@ abstract class DBService {
 
   static Future<List<Event>> getEvents(Filters filters, int pageIndex) async {
     Map<String, dynamic> params = {
-      'canceled' : false,
+      'canceled' : false.toString(),
       'start': filters.start,
       'end': filters.end,
       'page': '$pageIndex',

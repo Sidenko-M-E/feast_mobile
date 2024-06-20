@@ -5,7 +5,6 @@ class SuccessfullAuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final authVM = context.watch<AuthVM>();
     return PopScope(
       canPop: false,
       child: Scaffold(

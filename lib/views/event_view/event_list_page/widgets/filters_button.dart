@@ -30,14 +30,3 @@ class FiltersButton extends StatelessWidget {
     );
   }
 }
-
-// PreferredSize(
-//           preferredSize: Size(0, 0),
-//           child:
-//               //AppBar(backgroundColor: Colors.blue),
-//               AppBar(
-//             backgroundColor: Colors.blue,
-//             actions: [
-
-//             ],
-//           )),

@@ -6,7 +6,6 @@ class ProfileBasePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final authVm = context.watch<AuthVM>();
     return ProfileWelcomePage();
   }
 }
