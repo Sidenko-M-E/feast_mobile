@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:feast_mobile/models/user.dart';
-import 'package:feast_mobile/services/http_service.dart';
+import 'package:feast_mobile/services/db_service.dart';
 import 'package:flutter/material.dart';
 
 enum AuthMode { Signup, Singin }
@@ -23,6 +23,7 @@ class AuthVM extends ChangeNotifier {
   bool canContinue = false;
   bool passwordObscured = true;
   ErrorMessage? errorMessage = null;
+  bool logedIn = false;
 
   clearFields() {
     emailError = null;
@@ -30,6 +31,15 @@ class AuthVM extends ChangeNotifier {
     user = User.empty();
     canContinue = false;
     passwordObscured = true;
+  }
+
+  setLogedIn(bool logedStatus) {
+    this.logedIn = logedStatus;
+    if (logedStatus == false)
+    {
+      clearFields();
+    }
+    notifyListeners();
   }
 
   setUser(User? newUser) {
@@ -131,9 +141,10 @@ class AuthVM extends ChangeNotifier {
   Future<bool> signin() async {
     try {
       setLoading();
-      user.accessToken = await HttpService.userSignIn(
+      user.accessToken = await DBService.userSignIn(
           user.email, user.password, user.accessToken);
       setLoading();
+      setLogedIn(true);
       return true;
     } on SignInException catch (e) {
       if (e.type == SignInFailure.WrongPassword) {
@@ -172,7 +183,7 @@ class AuthVM extends ChangeNotifier {
   Future<bool> usercheck() async {
     try {
       setLoading();
-      await HttpService.userCheck(
+      await DBService.userCheck(
           user.name, user.email, user.password, user.accessToken);
       setLoading();
       return (true);
@@ -209,38 +220,36 @@ class AuthVM extends ChangeNotifier {
     }
   }
 
-
-    Future<bool> tokenCheck() async {
+  Future<bool> tokenCheck() async {
     try {
-      setLoading();
-      final bool res = await HttpService.tokenCheck(user.accessToken);
-      setLoading();
+      // setLoading();
+      final bool res = await DBService.tokenCheck(user.accessToken);
+      // setLoading();
       return (res);
     } on TimeoutException catch (_) {
-      setErrorMessage(ErrorMessage(
-        title: 'Ошибка связи',
-        description: 'Слабое интернет-соединение',
-      ));
-      setLoading();
+      // setErrorMessage(ErrorMessage(
+      //   title: 'Ошибка связи',
+      //   description: 'Слабое интернет-соединение',
+      // ));
+      // setLoading();
       return false;
     } on SocketException catch (_) {
-      setErrorMessage(ErrorMessage(
-        title: 'Ошибка связи',
-        description: 'Проверьте интернет-соединение',
-      ));
-      setLoading();
+      // setErrorMessage(ErrorMessage(
+      //   title: 'Ошибка связи',
+      //   description: 'Проверьте интернет-соединение',
+      // ));
+      // setLoading();
       return false;
     } on Exception catch (_) {
-      setErrorMessage(ErrorMessage(
-        title: 'Неизвестная ошибка',
-        description: 'Попробуйте позже',
-      ));
-      setLoading();
+      // setErrorMessage(ErrorMessage(
+      //   title: 'Неизвестная ошибка',
+      //   description: 'Попробуйте позже',
+      // ));
+      // setLoading();
       return false;
     }
   }
 }
-
 
 class ErrorMessage {
   ErrorMessage({required this.title, required this.description});

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:feast_mobile/models/user.dart';
 import 'package:feast_mobile/services/email_service.dart';
-import 'package:feast_mobile/services/http_service.dart';
+import 'package:feast_mobile/services/db_service.dart';
 import 'package:feast_mobile/services/otp_service.dart';
 import 'package:feast_mobile/view_models/auth_view_model.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +66,7 @@ class OtpVM extends ChangeNotifier {
     final code = otpService?.generateOTP();
     try {
       setLoading(true);
-      await EmailService()
+      await EmailService
           .sendEmail(To: user.email, OTP: code!)
           .timeout(Duration(seconds: 3));
       tickerSubs?.cancel();
@@ -87,11 +87,11 @@ class OtpVM extends ChangeNotifier {
 
   Future<bool> verifyCode(String code) async {
     switch (otpService?.verifyOTP(code)) {
-      case OtpVerificationError.None:
+      case OtpVerificationStatus.Valid:
         {
           try {
             setLoading(true);
-            user.accessToken = await HttpService.userSignUp(
+            user.accessToken = await DBService.userSignUp(
                 user.name, user.email, user.password, user.accessToken);
             setLoading(false);
             return true;
@@ -109,7 +109,6 @@ class OtpVM extends ChangeNotifier {
             }
             setLoading(false);
             return false;
-            //TODO вернуться на экран регистрации надо ли?
           } on TimeoutException catch (_) {
             setErrorMessage(ErrorMessage(
               title: 'Ошибка связи',
@@ -133,10 +132,10 @@ class OtpVM extends ChangeNotifier {
             return false;
           }
         }
-      case OtpVerificationError.ValidTimesUp:
+      case OtpVerificationStatus.ValidTimesUp:
         setCodeError('Код устарел');
         return false;
-      case OtpVerificationError.Invalid:
+      case OtpVerificationStatus.Invalid:
         setCodeError('Неверный код');
         return false;
       default:

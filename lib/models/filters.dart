@@ -1,63 +1,43 @@
 import 'package:feast_mobile/models/category.dart';
-
+import 'package:flutter/material.dart';
 
 class Filters {
-  int age;
-  List<CategoryModel> categories;
-  String startTime;
-  String endTime;
-  String startDate;
-  String endDate;
+  late int? age;
+  late List<CategoryModel> categories;
+  late DateTimeRange timeRange;
 
-  String get start => '${startDate}${startTime}';
-  String get end => '${endDate}${endTime}';
+  String get start => timeRange.start.toIso8601String();
+  String get end => timeRange.end.toIso8601String();
 
   resetFilters() {
-    categories.clear();
-    startTime = 'T00:00:00Z';
-    endTime = 'T00:00:00Z';
-    startDate = '2025-01-01';
-    endDate = '2029-01-01';
-    age = 100;
+    final DateTime now = DateTime.now();
+    this.categories.clear();
+    this.timeRange = DateTimeRange(
+        start: DateTime.utc(now.year, now.month, now.day, 0, 0, 0),
+        end: DateTime.utc(now.year, now.month + 2, now.day, 23, 59, 0));
+    this.age = null;
   }
 
-  Filters(this.age, this.categories, this.startTime, this.endTime,
-      this.startDate, this.endDate);
+  Filters(this.age, this.categories, this.timeRange);
 
-  Filters.empty()
-      : age = 100,
-        categories = [],
-        startTime = 'T00:00:00Z',
-        endTime = 'T00:00:00Z',
-        startDate = '2025-01-01',
-        endDate = '2029-01-01';
+  Filters.empty() {
+    final DateTime now = DateTime.now();
+    categories = [];
+    timeRange = DateTimeRange(
+        start: DateTime.utc(now.year, now.month, now.day, 0, 0, 0),
+        end: DateTime.utc(now.year, now.month + 2, now.day, 23, 59, 0));
+    age = null;
+  }
 
   Filters copyWith({
     int? age,
     List<CategoryModel>? categories,
-    String? startTime,
-    String? endTime,
-    String? startDate,
-    String? endDate,
+    DateTimeRange? timeRange,
   }) {
     return Filters(
       age ?? this.age,
       categories ?? List.from(this.categories),
-      startTime ?? this.startTime,
-      endTime ?? this.endTime,
-      startDate ?? this.startDate,
-      endDate ?? this.endDate,
+      timeRange ?? this.timeRange
     );
   }
-
-  // @override
-  // bool operator ==(Object other) {
-  //   return other is Filters &&
-  //       other.age == age &&
-  //       other.startTime == startTime &&
-  //       other.endTime == endTime &&
-  //       other.startDate == startDate &&
-  //       other.endDate == endDate &&
-  //       DeepCollectionEquality().equals(other.categories, categories);
-  // }
 }

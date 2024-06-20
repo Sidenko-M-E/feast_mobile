@@ -1,14 +1,17 @@
-import 'package:feast_mobile/features/auth/otp_page/ui/otp_page.dart';
-import 'package:feast_mobile/features/auth/signup_page/ui/signup_page.dart';
-import 'package:feast_mobile/features/auth/successfull_auth_page/successfull_auth_page.dart';
-import 'package:feast_mobile/features/event_view/event_details_page.dart/event_details_page.dart';
-import 'package:feast_mobile/features/event_view/event_list_page/event_list_page.dart';
+import 'package:feast_mobile/views/auth/otp_page/ui/otp_page.dart';
+import 'package:feast_mobile/views/auth/signup_page/ui/signup_page.dart';
+import 'package:feast_mobile/views/auth/successfull_auth_page/successfull_auth_page.dart';
+import 'package:feast_mobile/views/event_view/event_details_page.dart/event_details_page.dart';
+import 'package:feast_mobile/views/event_view/event_list_page/event_list_page.dart';
 
-import 'package:feast_mobile/features/auth/profile_base_page/profile_base_page.dart';
-import 'package:feast_mobile/features/auth/signin_page/ui/signin_page.dart';
-import 'package:feast_mobile/features/event_view/filters_page/filters_page.dart';
+import 'package:feast_mobile/views/auth/profile_base_page/profile_base_page.dart';
+import 'package:feast_mobile/views/auth/signin_page/ui/signin_page.dart';
+import 'package:feast_mobile/views/event_view/event_route_details_page.dart/event_route_details_page.dart';
+import 'package:feast_mobile/views/event_view/filters_page/filters_page.dart';
+import 'package:feast_mobile/views/route_views/event_details_page/route_event_details_page.dart';
+import 'package:feast_mobile/views/route_views/route_details_page/route_details_page.dart';
+import 'package:feast_mobile/views/route_views/route_list_page/route_list_page.dart';
 
-import 'package:feast_mobile/features/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,6 +20,21 @@ final shellNavigatorKeyEvents = GlobalKey<NavigatorState>();
 final shellNavigatorKeyProfile = GlobalKey<NavigatorState>();
 
 GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
+  GoRoute(
+      path: '/route_details',
+      pageBuilder: (context, state) {
+        return NoTransitionPage(child: RouteDetailsPage());
+      }),
+  GoRoute(
+      path: '/routes_event_details',
+      pageBuilder: (context, state) {
+        return NoTransitionPage(child: RouteEventDetailsPage());
+      }),
+  GoRoute(
+      path: '/event_route',
+      pageBuilder: (context, state) {
+        return NoTransitionPage(child: EventRouteDetailsPage());
+      }),
   GoRoute(
       path: '/event_details',
       pageBuilder: (context, state) {
@@ -44,7 +62,7 @@ GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
           GoRoute(
               path: '/routes',
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: TestPage()))
+                  NoTransitionPage(child: RouteListPage())),
         ]),
         StatefulShellBranch(navigatorKey: shellNavigatorKeyProfile, routes: [
           GoRoute(
@@ -52,11 +70,6 @@ GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
               pageBuilder: (context, state) =>
                   NoTransitionPage(child: ProfileBasePage()),
               routes: [
-                GoRoute(
-                    //TODO сделать страницу настроек профиля
-                    path: 'settings',
-                    pageBuilder: (context, state) =>
-                        NoTransitionPage(child: TestPage())),
                 GoRoute(
                     path: 'signin',
                     pageBuilder: (context, state) =>
@@ -80,7 +93,8 @@ GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
                             GoRoute(
                                 path: 'success',
                                 pageBuilder: (context, state) =>
-                                    NoTransitionPage(child: SuccessfullAuthPage()))
+                                    NoTransitionPage(
+                                        child: SuccessfullAuthPage()))
                           ]),
                     ])
               ])

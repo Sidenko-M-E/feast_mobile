@@ -1,8 +1,8 @@
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
-class EmailService {
-  Future<void> sendEmail({required String To, required String OTP}) async {
+abstract class EmailService {
+  static Future<void> sendEmail({required String To, required String OTP}) async {
     final smtpServer = SmtpServer(
       'smtp.yandex.ru',
       username: 'polzunov.feast@yandex.ru',

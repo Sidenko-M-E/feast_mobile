@@ -2,59 +2,47 @@ import 'package:otp/otp.dart';
 
 class OTPService {
   static const int otpRequestCooldown = 30;
-  static const int OTPValidTimeInterval = 120;
-  late String validOTP;
-  late int CannotReqOTPUntilTime;
-  late int OTPvalidUntilTime;
+  static const int otpValidTimeInterval = 120;
+  late String _validOTP;
+  late int _allowRequestTime;
 
   String generateOTP() {
-    validOTP = OTP.generateTOTPCodeString(
+    _validOTP = OTP.generateTOTPCodeString(
         OTP.randomSecret(), DateTime.now().microsecondsSinceEpoch,
         length: 4, interval: otpRequestCooldown);
 
-    CannotReqOTPUntilTime =
-        DateTime.fromMicrosecondsSinceEpoch(OTP.lastUsedTime)
-            .add(Duration(seconds: otpRequestCooldown))
-            .microsecondsSinceEpoch;
-
-    OTPvalidUntilTime = DateTime.fromMicrosecondsSinceEpoch(OTP.lastUsedTime)
-        .add(Duration(seconds: OTPValidTimeInterval))
+    _allowRequestTime = DateTime.fromMicrosecondsSinceEpoch(OTP.lastUsedTime)
+        .add(Duration(seconds: otpRequestCooldown))
         .microsecondsSinceEpoch;
 
-    return validOTP;
+    return _validOTP;
   }
 
   bool canGenerateOTP() {
     if (OTP.lastUsedTime == 0)
       return true;
     else {
-      if (OTP.lastUsedTime.compareTo(CannotReqOTPUntilTime) > 0) {
+      if (OTP.lastUsedTime.compareTo(_allowRequestTime) > 0) {
         return true;
       } else
         return false;
     }
   }
 
-  OtpVerificationError verifyOTP(String otp) {
+  OtpVerificationStatus verifyOTP(String otp) {
     // Если код ещё не генерировали, то проверять нечего.
-    if (OTP.lastUsedTime == 0) return OtpVerificationError.None;
+    if (OTP.lastUsedTime == 0) return OtpVerificationStatus.Valid;
 
     // Истек срок валидности
     if ((DateTime.now().microsecondsSinceEpoch - OTP.lastUsedTime) >
-        OTPValidTimeInterval * 1000000) {
-      return OtpVerificationError.ValidTimesUp;
-    }
-
-    // if (OTP.lastUsedTime.compareTo(OTPvalidUntilTime) > 0) {
-    //   debugPrint(OTP.lastUsedTime.compareTo(OTPvalidUntilTime).toString());
-    //   return OtpVerificationError.ValidTimesUp;
-    // }
+        otpValidTimeInterval * 1000000)
+      return OtpVerificationStatus.ValidTimesUp;
 
     // Неверный код
-    if (validOTP.compareTo(otp) != 0) return OtpVerificationError.Invalid;
+    if (_validOTP.compareTo(otp) != 0) return OtpVerificationStatus.Invalid;
 
-    return OtpVerificationError.None;
+    return OtpVerificationStatus.Valid;
   }
 }
 
-enum OtpVerificationError { None, ValidTimesUp, Invalid }
+enum OtpVerificationStatus { Valid, ValidTimesUp, Invalid }

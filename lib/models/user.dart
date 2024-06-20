@@ -4,7 +4,7 @@ class User {
   User.empty()
       : name = '',
         email = '',
-        phone = '',
+        phone = null,
         password = '',
         accessToken = '';
 

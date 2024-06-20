@@ -1,0 +1,151 @@
+import 'package:feast_mobile/models/route_info.dart';
+import 'package:flutter/material.dart';
+
+class RouteCard extends StatefulWidget {
+  const RouteCard({
+    required this.routeInfo,
+    this.onRouteButtonTap,
+  });
+
+  final RouteInfo routeInfo;
+  final void Function()? onRouteButtonTap;
+
+  @override
+  State<RouteCard> createState() => _RouteCardState();
+}
+
+class _RouteCardState extends State<RouteCard> {
+  bool walkShowing = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool walkObscured =
+        widget.routeInfo.timeLeft < widget.routeInfo.walk.time;
+    final bool carObscured =
+        widget.routeInfo.timeLeft < widget.routeInfo.car.time;
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Row(
+        children: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  walkShowing = !walkShowing;
+                });
+              },
+              icon: Icon(
+                  walkShowing
+                      ? Icons.directions_walk_rounded
+                      : Icons.directions_car_rounded,
+                  size: 25,
+                  color: walkShowing
+                      ? walkObscured
+                          ? Colors.grey
+                          : Colors.blue
+                      : carObscured
+                          ? Colors.grey
+                          : Colors.blue)),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                walkShowing
+                    ? '${doubleTimeToString(widget.routeInfo.walk.time)}'
+                    : '${doubleTimeToString(widget.routeInfo.car.time)}',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+              Text(
+                walkShowing
+                    ? '${doubleLengthToString(widget.routeInfo.walk.length)}'
+                    : '${doubleLengthToString(widget.routeInfo.car.length)}',
+                style: Theme.of(context).textTheme.labelMedium,
+              )
+            ],
+          ),
+          Expanded(
+              child: Center(
+            child: Container(
+              child: walkShowing
+                  ? walkObscured
+                      ? Text('Не успеваете!',
+                          style: TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.w500))
+                      : null
+                  : carObscured
+                      ? Text('Не успеваете!',
+                          style: TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.w500))
+                      : null,
+            ),
+          )),
+          ElevatedButton(
+            onPressed: widget.onRouteButtonTap,
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(12)),
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.blue,
+            ),
+            child: Text(
+              'Маршрут',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// Container(
+//       color: Colors.white,
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Column(
+//             children: [
+//               Text(
+//                   '${(routeInfo.walk.length.round() ~/ 1000).toString()} км ${(routeInfo.walk.length.round() % 1000).toString()} м'),
+//               Text(
+//                   '${((routeInfo.walk.time * 60).floor() ~/ 60).toString()} мин  ${((routeInfo.walk.time * 60).floor() % 60).toString()} сек'),
+//             ],
+//           ),
+//           GestureDetector(
+//             onTap: () {
+//               if (!walkObscured) {
+//                 if (onWalkTap != null) onWalkTap!();
+//               }
+//             },
+//             child: CircleAvatar(
+//               backgroundColor: Colors.white,
+//               foregroundColor:
+//                   walkObscured ? Colors.red.shade100 : Colors.blue.shade200,
+//               child: Icon(Icons.directions_walk_sharp),
+//             ),
+//           ),
+//           GestureDetector(
+//             onTap: () {
+//               if (!carObscured) {}
+//             },
+//             child: CircleAvatar(
+//               backgroundColor: Colors.white,
+//               foregroundColor:
+//                   carObscured ? Colors.red.shade100 : Colors.blue.shade200,
+//               child: Icon(Icons.directions_car_filled_sharp),
+//             ),
+//           ),
+//           Column(
+//             children: [
+//               Text(
+//                   '${(routeInfo.car.length.round() ~/ 1000).toString()} км ${(routeInfo.car.length.round() % 1000).toString()} м'),
+//               Text(
+//                   '${((routeInfo.car.time * 60).floor() ~/ 60).toString()} мин  ${((routeInfo.car.time * 60).floor() % 60).toString()} сек'),
+//             ],
+//           )
+//         ],
+//       ),
+//     );
