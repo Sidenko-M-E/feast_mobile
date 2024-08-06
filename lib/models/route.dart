@@ -16,7 +16,7 @@ class RouteModel {
 
     return RouteModel(
         length: json['length'] as double,
-        time: json['time'] as double,
+        time: json['travel_time'] as double,
         coordinates: temp != null
             ? (temp).map((item) {
                 final temp = (item as Map<String, dynamic>);

@@ -66,7 +66,7 @@ class EventCard extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          '$address',
+                          '${address.split(',')[0]}, ${address.split(',')[1]}',
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,

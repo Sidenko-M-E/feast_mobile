@@ -22,6 +22,7 @@ class EventVM extends ChangeNotifier {
   TextEditingController controller = TextEditingController();
   Event? lastRouteEvent;
   bool walkRouteShowing = true;
+  bool routeBuildingInProgress = false;
 
   late bool eventLoadingError;
   bool eventLoading = false;
@@ -141,7 +142,6 @@ class EventVM extends ChangeNotifier {
                     _filtersDup.timeRange.end.hour &&
                 _filtersDup.timeRange.start.minute >
                     _filtersDup.timeRange.end.minute))) {
-      //TODO Вывести уведомление об ошибке
     } else {
       setFiltersStartDate(
           timeRange.start.year, timeRange.start.month, timeRange.start.day);
@@ -242,6 +242,9 @@ class EventVM extends ChangeNotifier {
 
   setSelectedEvent(Event selectedEvent) async {
     _selectedEvent = selectedEvent;
+    routeBuildingInProgress = true;
+    notifyListeners();
+
     if (lastRouteEvent == null) {
       final Position userPos =
           await GeolocationService.determineCurrentPosition();
@@ -261,6 +264,8 @@ class EventVM extends ChangeNotifier {
               .toDouble() /
           60;
       routeInfo = RouteInfo(walk: walkRoute, car: carRoute, timeLeft: timeLeft);
+      routeBuildingInProgress = false;
+      notifyListeners();
     } else {
       final RouteModel walkRoute = await RoutingService.getRouteFullFromAddress(
         lastRouteEvent!.place.address,
@@ -278,6 +283,8 @@ class EventVM extends ChangeNotifier {
               .toDouble() /
           60;
       routeInfo = RouteInfo(walk: walkRoute, car: carRoute, timeLeft: timeLeft);
+      routeBuildingInProgress = false;
+      notifyListeners();
     }
   }
 

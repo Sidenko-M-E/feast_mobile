@@ -1,3 +1,4 @@
+import 'package:feast_mobile/routes/routes.dart';
 import 'package:feast_mobile/views/event_view/event_list_page/widgets/event_card.dart';
 import 'package:feast_mobile/view_models/events_view_model.dart';
 import 'package:feast_mobile/models/event.dart';
@@ -63,12 +64,24 @@ class EventsList extends StatelessWidget {
               EventCard(
                 event: event,
                 onTap: () async {
-                  await eventVM.setSelectedEvent(event);
-                  context.push('/event_details');
+                  try {
+                    await eventVM.setSelectedEvent(event);
+                    context.push('/event_details');
+                  } catch (_) {
+                    showAccessDeniedDialog(context, () {
+                      goRouter.pop();
+                    });
+                  }
                 },
                 onButtonPressed: () async {
-                  await eventVM.setSelectedEvent(event);
-                  context.push('/event_route');
+                  try {
+                    await eventVM.setSelectedEvent(event);
+                    context.push('/event_route');
+                  } catch (_) {
+                    showAccessDeniedDialog(context, () {
+                      goRouter.pop();
+                    });
+                  }
                 },
               ),
               Divider(color: Colors.white)
@@ -78,4 +91,28 @@ class EventsList extends StatelessWidget {
       );
     }
   }
+}
+
+Future<dynamic> showAccessDeniedDialog(
+    BuildContext context, void Function()? onPressed) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text('Ошибка!'),
+          titleTextStyle: Theme.of(context).textTheme.titleMedium,
+          content: Text('Нельзя построить маршрут от текущего местоположения, не выдав разрешение сервису геолокации!'),
+          contentTextStyle: Theme.of(context).textTheme.labelMedium,
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey.shade100,
+                    foregroundColor: Colors.red.shade800),
+                onPressed: onPressed,
+                child: Text('Хорошо')),
+          ],
+        );
+      });
 }

@@ -37,7 +37,7 @@ class EventListPage extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: EventsList(),
+        child: EventsList()
       ),
     );
   }

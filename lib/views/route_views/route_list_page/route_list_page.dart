@@ -93,16 +93,16 @@ class RouteListPage extends StatelessWidget {
                                 address: routingVM
                                     .routeEvents[new_index].place.address,
                                 name: routingVM.routeEvents[new_index].name,
-                                onTap: () {
-                                  routingVM.setCurrentEvent(new_index);
+                                onTap: () async {
+                                  await routingVM.setCurrentEvent(new_index);
                                   goRouter.push('/routes_event_details');
                                 },
                               );
                             } else {
                               return RouteCard(
                                 routeInfo: routingVM.routeInfos[new_index],
-                                onRouteButtonTap: () {
-                                  routingVM.setCurrentRoute(new_index);
+                                onRouteButtonTap: () async {
+                                  await routingVM.setCurrentRoute(new_index);
                                   goRouter.push('/route_details');
                                 },
                               );

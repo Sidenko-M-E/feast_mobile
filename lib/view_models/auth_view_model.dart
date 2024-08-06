@@ -192,7 +192,6 @@ class AuthVM extends ChangeNotifier {
         emailError = 'Email занят';
         canContinue = false;
       } else if (e.type == SignUpFailure.PhoneAlreadyExists) {
-        //TODO Если такой телефон уже существует
       }
       setLoading();
       return false;
