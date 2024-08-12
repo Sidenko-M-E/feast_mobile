@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AuthEmailInput extends StatelessWidget {
-  AuthEmailInput(
+  const AuthEmailInput(
       {super.key,
       this.errorText,
       this.onFocusChange,
@@ -27,12 +27,12 @@ class AuthEmailInput extends StatelessWidget {
           ),
           if (errorText != null)
             Text(errorText!,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w500,
                     fontSize: 12))
         ]),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Focus(
           onFocusChange: onFocusChange,
           child: TextFormField(
@@ -45,7 +45,7 @@ class AuthEmailInput extends StatelessWidget {
                   RegExp(r"[a-zA-Z0-9.a-zA-Z0-9!@#$%&'*+-/=?^_`{|}~]")),
             ],
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(12),
+              contentPadding: const EdgeInsets.all(12),
               filled: true,
               fillColor: errorText != null ? Colors.red[100] : Colors.white,
               hintText: "Введите E-mail",

@@ -28,7 +28,7 @@ class DateDurationPicker extends StatelessWidget {
               children: [
                 Text('$startDate — $endDate',
                     style: Theme.of(context).textTheme.labelMedium),
-                Icon(Icons.arrow_drop_down)
+                const Icon(Icons.arrow_drop_down)
               ],
             ),
           )),

@@ -5,7 +5,7 @@ import 'package:feast_mobile/services/db_service.dart';
 import 'package:feast_mobile/services/routing_service.dart';
 import 'package:flutter/material.dart';
 
-enum OperationStatus { Success, TokenError, InternalError }
+enum OperationStatus { success, tokenError, internalError }
 
 class RoutingVM extends ChangeNotifier {
   List<Event> routeEvents = [];
@@ -26,11 +26,12 @@ class RoutingVM extends ChangeNotifier {
       routesLoadingError = false;
       routesLoading = true;
       routeEvents = await DBService.getRouteEvents(authToken);
-      if (routeEvents.length > 1)
+      if (routeEvents.length > 1) {
         for (int i = 0; i < routeEvents.length - 1; i++) {
           routeInfos.add(
               await buildRoutesBetween(routeEvents[i], routeEvents[i + 1]));
         }
+      }
     } catch (e) {
       routesLoadingError = true;
     } finally {
@@ -45,9 +46,9 @@ class RoutingVM extends ChangeNotifier {
       routeEvents.removeAt(index);
       await DBService.putRoute(accessToken, routeEvents);
       if (index == 0) {
-        if (routeInfos.length > 0) routeInfos.removeAt(0);
+        if (routeInfos.isNotEmpty) routeInfos.removeAt(0);
       } else if (index == routeEvents.length) {
-        if (routeInfos.length > 0) routeInfos.removeLast();
+        if (routeInfos.isNotEmpty) routeInfos.removeLast();
       } else {
         routeInfos.removeAt(index - 1);
         routeInfos.removeAt(index - 1);
@@ -57,13 +58,13 @@ class RoutingVM extends ChangeNotifier {
                 routeEvents[index - 1], routeEvents[index]));
       }
       notifyListeners();
-      return OperationStatus.Success;
+      return OperationStatus.success;
     } on TokenAuthFailed catch (_) {
       routeEvents.insert(index, temp);
-      return OperationStatus.TokenError;
+      return OperationStatus.tokenError;
     } catch (_) {
       routeEvents.insert(index, temp);
-      return OperationStatus.InternalError;
+      return OperationStatus.internalError;
     }
   }
 
@@ -72,18 +73,19 @@ class RoutingVM extends ChangeNotifier {
     try {
       routeEvents.add(event);
       await DBService.putRoute(accessToken, routeEvents);
-      if (routeEvents.length >= 2)
+      if (routeEvents.length >= 2) {
         routeInfos.add(await buildRoutesBetween(
             routeEvents[routeEvents.length - 2],
             routeEvents[routeEvents.length - 1]));
+      }
       notifyListeners();
-      return OperationStatus.Success;
+      return OperationStatus.success;
     } on TokenAuthFailed catch (_) {
       routeEvents.remove(event);
-      return OperationStatus.TokenError;
+      return OperationStatus.tokenError;
     } catch (_) {
       routeEvents.remove(event);
-      return OperationStatus.InternalError;
+      return OperationStatus.internalError;
     }
   }
 
@@ -114,11 +116,12 @@ class RoutingVM extends ChangeNotifier {
                 ((routeEvents[index].timeRange.end.hour * 60) +
                     routeEvents[index].timeRange.end.minute))
             .toDouble();
-    currentRouteInfo = RouteInfo(walk: walkRoute, car: carRoute, timeLeft: timeLeft);
+    currentRouteInfo =
+        RouteInfo(walk: walkRoute, car: carRoute, timeLeft: timeLeft);
     notifyListeners();
   }
 
-  setCurrentEvent(int index){
+  setCurrentEvent(int index) {
     currentEvent = routeEvents[index];
     notifyListeners();
   }

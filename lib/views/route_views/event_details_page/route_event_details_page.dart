@@ -24,14 +24,14 @@ class RouteEventDetailsPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             context.pop();
           },
         ),
         backgroundColor: Colors.white,
-        title: Text('О мероприятии'),
-        titleTextStyle: TextStyle(
+        title: const Text('О мероприятии'),
+        titleTextStyle: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
           color: Colors.black,
@@ -43,83 +43,85 @@ class RouteEventDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${selectedEvent.name}',
-              style: TextStyle(
+              selectedEvent.name,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),
             ),
-            if (selectedEvent.description != '') SizedBox(height: 10),
+            if (selectedEvent.description != '') const SizedBox(height: 10),
             if (selectedEvent.description != '')
               RichText(
                 maxLines: 4,
                 text: TextSpan(text: '', children: [
                   TextSpan(
-                    text: '${selectedEvent.description}',
-                    style: TextStyle(color: Colors.black),
+                    text: selectedEvent.description,
+                    style: const TextStyle(color: Colors.black),
                     recognizer: TapGestureRecognizer()..onTap = () {},
                   )
                 ]),
               ),
             Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Icon(
                       Icons.access_time_rounded,
                       color: Colors.grey[700],
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Время:'),
+                        const Text('Время:'),
                         Text(dateFormatter(selectedEvent.timeRange))
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(Icons.place, color: Colors.grey[700]),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Адрес:'),
-                        Text('${selectedEvent.place.address}')
+                        const Text('Адрес:'),
+                        Text(selectedEvent.place.address)
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(Icons.tune, color: Colors.grey[700]),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Категории:'),
-                        Text(
-                            '${selectedEvent.categories.map((CategoryModel e) => e.name.toString()).toList().join(' | ')}')
+                        const Text('Категории:'),
+                        Text(selectedEvent.categories
+                            .map((CategoryModel e) => e.name.toString())
+                            .toList()
+                            .join(' | '))
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(Icons.align_horizontal_left_sharp,
                         color: Colors.grey[700]),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Возрастное ограничение:'),
+                        const Text('Возрастное ограничение:'),
                         Text(
                           '${selectedEvent.ageLimit}+',
                         )
@@ -129,9 +131,9 @@ class RouteEventDetailsPage extends StatelessWidget {
                 ),
               ],
             ),
-            if (selectedEvent.imageUrls.length != 0) SizedBox(height: 20),
-            if (selectedEvent.imageUrls.length != 0)
-              Text(
+            if (selectedEvent.imageUrls.isNotEmpty) const SizedBox(height: 20),
+            if (selectedEvent.imageUrls.isNotEmpty)
+              const Text(
                 'Фотографии',
                 style: TextStyle(
                   fontSize: 16,
@@ -166,7 +168,7 @@ class RouteEventDetailsPage extends StatelessWidget {
                       .toList()),
             ),
             ElevatedButton.icon(
-              icon: Icon(
+              icon: const Icon(
                 Icons.close,
                 size: 20,
               ),
@@ -184,17 +186,18 @@ class RouteEventDetailsPage extends StatelessWidget {
                     routingVM.routeEvents.indexOf(selectedEvent);
                 switch (await routingVM.deleteRouteEvent(
                     authVM.user.accessToken, elementIndex)) {
-                  case OperationStatus.Success:
-                    if (routingVM.routeEvents.length == 0)
+                  case OperationStatus.success:
+                    if (routingVM.routeEvents.isEmpty) {
                       eventVM.getLastRouteEvent(null);
-                    else if (routingVM.routeEvents.length == elementIndex)
+                    } else if (routingVM.routeEvents.length == elementIndex) {
                       eventVM.getLastRouteEvent(routingVM.routeEvents.last);
+                    }
                     goRouter.pop();
                     break;
-                  case OperationStatus.InternalError:
+                  case OperationStatus.internalError:
                     showInternalErrorDialog(context);
                     break;
-                  case OperationStatus.TokenError:
+                  case OperationStatus.tokenError:
                     showTokenErrorDialog(context, () {
                       eventVM.getLastRouteEvent(null);
                       goRouter.pop();
@@ -204,7 +207,7 @@ class RouteEventDetailsPage extends StatelessWidget {
                     break;
                 }
               },
-              label: Text('Удалить из списка'),
+              label: const Text('Удалить из списка'),
             )
           ],
         ),
@@ -220,9 +223,9 @@ Future<dynamic> showTokenErrorDialog(
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Ошибка!'),
+          title: const Text('Ошибка!'),
           titleTextStyle: Theme.of(context).textTheme.titleMedium,
-          content: Text('Вам потребуется повторная авторизация'),
+          content: const Text('Вам потребуется повторная авторизация'),
           contentTextStyle: Theme.of(context).textTheme.labelMedium,
           actionsAlignment: MainAxisAlignment.center,
           actions: [
@@ -231,7 +234,7 @@ Future<dynamic> showTokenErrorDialog(
                     backgroundColor: Colors.grey.shade100,
                     foregroundColor: Colors.red.shade800),
                 onPressed: onPressed,
-                child: Text('Хорошо')),
+                child: const Text('Хорошо')),
           ],
         );
       });
@@ -243,9 +246,9 @@ Future<dynamic> showInternalErrorDialog(BuildContext context) {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Ошибка!'),
+          title: const Text('Ошибка!'),
           titleTextStyle: Theme.of(context).textTheme.titleMedium,
-          content: Text(
+          content: const Text(
               'Не получилось добавить мероприятие. Проверьте качество связи'),
           contentTextStyle: Theme.of(context).textTheme.labelMedium,
           actionsAlignment: MainAxisAlignment.center,
@@ -257,7 +260,7 @@ Future<dynamic> showInternalErrorDialog(BuildContext context) {
                 onPressed: () {
                   goRouter.pop();
                 },
-                child: Text('Хорошо')),
+                child: const Text('Хорошо')),
           ],
         );
       });

@@ -12,7 +12,7 @@ class SearchPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final eventViewModel = context.watch<EventVM>();
     return Container(
-      decoration: BoxDecoration(boxShadow: [
+      decoration: const BoxDecoration(boxShadow: [
         BoxShadow(
           color: Colors.grey,
           blurStyle: BlurStyle.outer,
@@ -28,7 +28,7 @@ class SearchPanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Найдены мероприятия:',
+            const Text('Найдены мероприятия:',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -40,11 +40,11 @@ class SearchPanel extends StatelessWidget {
                 goRouter.push('/event_filters');
               },
               child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15)),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Фильтры'),

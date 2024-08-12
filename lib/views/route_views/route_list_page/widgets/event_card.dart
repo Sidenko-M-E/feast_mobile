@@ -22,7 +22,7 @@ class EventCard extends StatelessWidget {
       onTap: onTap,
       child: IntrinsicHeight(
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(color: Colors.grey.shade200),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -35,13 +35,13 @@ class EventCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text('$startTime',
+                      Text(startTime,
                           style: Theme.of(context).textTheme.labelMedium),
-                      Icon(
+                      const Icon(
                         Icons.keyboard_double_arrow_down_rounded,
                         color: Colors.grey,
                       ),
-                      Text('$endTime',
+                      Text(endTime,
                           style: Theme.of(context).textTheme.labelMedium),
                     ]),
               ),
@@ -53,10 +53,10 @@ class EventCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '$name',
+                      name,
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Icon(
@@ -64,7 +64,7 @@ class EventCard extends StatelessWidget {
                           size: 20,
                           color: Colors.grey[700],
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
                           '${address.split(',')[0]}, ${address.split(',')[1]}',
                           style: TextStyle(

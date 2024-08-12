@@ -13,13 +13,13 @@ class OTPPage extends StatelessWidget {
     return otpVM.loading
         ? Stack(
             children: [
-              AbsorbPointer(child: OtpPageLayout()),
+              const AbsorbPointer(child: OtpPageLayout()),
               Container(
                 width: double.infinity,
                 height: double.infinity,
                 color: Colors.grey[200]!.withOpacity(0.6),
               ),
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: Colors.blue,
                   strokeWidth: 5.0,
@@ -28,9 +28,9 @@ class OTPPage extends StatelessWidget {
             ],
           )
         : otpVM.errorMessage == null
-            ? OtpPageLayout()
+            ? const OtpPageLayout()
             : Stack(children: [
-                AbsorbPointer(child: OTPPage()),
+                const AbsorbPointer(child: OTPPage()),
                 Container(
                   width: double.infinity,
                   height: double.infinity,

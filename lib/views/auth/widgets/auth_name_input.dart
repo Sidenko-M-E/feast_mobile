@@ -25,12 +25,12 @@ class AuthNameInput extends StatelessWidget {
               style: Theme.of(context).textTheme.labelLarge),
           if (errorText != null)
             Text(errorText!,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w500,
                     fontSize: 12))
         ]),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Focus(
           onFocusChange: onFocusChange,
           child: TextFormField(
@@ -44,12 +44,12 @@ class AuthNameInput extends StatelessWidget {
             ],
             maxLength: 256,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(12),
+              contentPadding: const EdgeInsets.all(12),
               filled: true,
               fillColor: errorText != null ? Colors.red[100] : Colors.white,
               hintText: "Введите ваше имя",
               hintStyle: Theme.of(context).textTheme.labelSmall,
-              counterStyle: TextStyle(fontSize: 0),
+              counterStyle: const TextStyle(fontSize: 0),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: errorText != null ? Colors.red : Colors.black),

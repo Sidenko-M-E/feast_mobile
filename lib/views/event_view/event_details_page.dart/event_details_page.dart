@@ -19,14 +19,14 @@ class EventDetailsPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             context.pop();
           },
         ),
         backgroundColor: Colors.white,
-        title: Text('О мероприятии'),
-        titleTextStyle: TextStyle(
+        title: const Text('О мероприятии'),
+        titleTextStyle: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
           color: Colors.black,
@@ -38,83 +38,83 @@ class EventDetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${selectedEvent.name}',
-              style: TextStyle(
+              selectedEvent.name,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),
             ),
-            if (selectedEvent.description != '') SizedBox(height: 10),
+            if (selectedEvent.description != '') const SizedBox(height: 10),
             if (selectedEvent.description != '')
               RichText(
                 maxLines: 4,
                 text: TextSpan(text: '', children: [
                   TextSpan(
-                    text: '${selectedEvent.description}',
-                    style: TextStyle(color: Colors.black),
+                    text: selectedEvent.description,
+                    style: const TextStyle(color: Colors.black),
                     recognizer: TapGestureRecognizer()..onTap = () {},
                   )
                 ]),
               ),
             Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Icon(
                       Icons.access_time_rounded,
                       color: Colors.grey[700],
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Время:'),
+                        const Text('Время:'),
                         Text(dateFormatter(selectedEvent.timeRange))
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(Icons.place, color: Colors.grey[700]),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Адрес:'),
-                        Text('${selectedEvent.place.address}')
+                        const Text('Адрес:'),
+                        Text(selectedEvent.place.address)
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(Icons.tune, color: Colors.grey[700]),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Категории:'),
+                        const Text('Категории:'),
                         Text(
-                            '${selectedEvent.categories.map((CategoryModel e) => e.name.toString()).toList().join(' | ')}')
+                            selectedEvent.categories.map((CategoryModel e) => e.name.toString()).toList().join(' | '))
                       ],
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(Icons.align_horizontal_left_sharp,
                         color: Colors.grey[700]),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Возрастное ограничение:'),
+                        const Text('Возрастное ограничение:'),
                         Text(
                           '${selectedEvent.ageLimit}+',
                         )
@@ -124,9 +124,9 @@ class EventDetailsPage extends StatelessWidget {
                 ),
               ],
             ),
-            if (selectedEvent.imageUrls.length != 0) SizedBox(height: 20),
-            if (selectedEvent.imageUrls.length != 0)
-              Text(
+            if (selectedEvent.imageUrls.isNotEmpty) const SizedBox(height: 20),
+            if (selectedEvent.imageUrls.isNotEmpty)
+              const Text(
                 'Фотографии',
                 style: TextStyle(
                   fontSize: 16,
@@ -161,7 +161,7 @@ class EventDetailsPage extends StatelessWidget {
                       .toList()),
             ),
             ElevatedButton.icon(
-              icon: Icon(
+              icon: const Icon(
                 Icons.check,
                 size: 20,
               ),
@@ -177,7 +177,7 @@ class EventDetailsPage extends StatelessWidget {
               onPressed: () {
                 goRouter.push('/event_route');
               },
-              label: Text('Построить маршрут'),
+              label: const Text('Построить маршрут'),
             )
           ],
         ),

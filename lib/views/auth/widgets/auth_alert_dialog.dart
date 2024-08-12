@@ -28,18 +28,18 @@ class AuthAlertDialog extends StatelessWidget {
                   title,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   description,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.blue,
                       backgroundColor: Colors.white),
                   onPressed: onSubmit,
-                  child: Text('Ок'),
+                  child: const Text('Ок'),
                 )
               ],
             ),

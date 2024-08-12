@@ -5,7 +5,7 @@ import 'package:feast_mobile/models/user.dart';
 import 'package:feast_mobile/services/db_service.dart';
 import 'package:flutter/material.dart';
 
-enum AuthMode { Signup, Singin }
+enum AuthMode { signup, signin }
 
 class AuthVM extends ChangeNotifier {
   final RegExp _emailRegExp = RegExp(
@@ -17,12 +17,12 @@ class AuthVM extends ChangeNotifier {
   late AuthMode authMode;
   User user = User.empty();
   bool loading = false;
-  String? emailError = null;
-  String? passwordError = null;
-  String? nameError = null;
+  String? emailError;
+  String? passwordError;
+  String? nameError;
   bool canContinue = false;
   bool passwordObscured = true;
-  ErrorMessage? errorMessage = null;
+  ErrorMessage? errorMessage;
   bool logedIn = false;
 
   clearFields() {
@@ -34,9 +34,8 @@ class AuthVM extends ChangeNotifier {
   }
 
   setLogedIn(bool logedStatus) {
-    this.logedIn = logedStatus;
-    if (logedStatus == false)
-    {
+    logedIn = logedStatus;
+    if (logedStatus == false) {
       clearFields();
     }
     notifyListeners();
@@ -62,7 +61,7 @@ class AuthVM extends ChangeNotifier {
       canContinue = false;
     } else {
       emailError = null;
-      if (authMode == AuthMode.Singin) {
+      if (authMode == AuthMode.signin) {
         if (passwordError != null || user.password == '') canContinue = false;
       } else {
         if (passwordError != null ||
@@ -86,18 +85,20 @@ class AuthVM extends ChangeNotifier {
     } else if (!_passwordRegExp.hasMatch(user.password)) {
       List additions = [];
       if (!user.password.contains(RegExp(r'[a-zA-Z]'))) additions.add('буквы');
-      if (!user.password.contains(RegExp(r'[@$!%*#?^&]')))
+      if (!user.password.contains(RegExp(r'[@$!%*#?^&]'))) {
         additions.add('спец.символы');
+      }
       if (!user.password.contains(RegExp(r'[0-9]'))) additions.add('цифры');
-      if (additions.isNotEmpty)
-        passwordError = 'Добавьте: ' + additions.join(', ');
-      else
+      if (additions.isNotEmpty) {
+        passwordError = 'Добавьте: ${additions.join(', ')}';
+      } else {
         passwordError = 'Уберите некорректные символы';
+      }
 
       canContinue = false;
     } else {
       passwordError = null;
-      if (authMode == AuthMode.Singin) {
+      if (authMode == AuthMode.signin) {
         if (emailError != null || user.email == '') canContinue = false;
       } else {
         if (emailError != null ||
@@ -120,10 +121,11 @@ class AuthVM extends ChangeNotifier {
       if (emailError != null ||
           user.email == '' ||
           passwordError != null ||
-          user.password == '')
+          user.password == '') {
         canContinue = false;
-      else
+      } else {
         canContinue = true;
+      }
     }
     notifyListeners();
   }
@@ -147,10 +149,10 @@ class AuthVM extends ChangeNotifier {
       setLogedIn(true);
       return true;
     } on SignInException catch (e) {
-      if (e.type == SignInFailure.WrongPassword) {
+      if (e.type == SignInFailure.wrongPassword) {
         passwordError = 'Неверный пароль';
         canContinue = false;
-      } else if (e.type == SignInFailure.EmailAlreadyTaken) {
+      } else if (e.type == SignInFailure.emailAlreadyTaken) {
         emailError = 'Такой email не зарегистрирован';
         canContinue = false;
       }
@@ -188,11 +190,10 @@ class AuthVM extends ChangeNotifier {
       setLoading();
       return (true);
     } on SignUpException catch (e) {
-      if (e.type == SignUpFailure.EmailAlreadyExists) {
+      if (e.type == SignUpFailure.emailAlreadyExists) {
         emailError = 'Email занят';
         canContinue = false;
-      } else if (e.type == SignUpFailure.PhoneAlreadyExists) {
-      }
+      } else if (e.type == SignUpFailure.phoneAlreadyExists) {}
       setLoading();
       return false;
     } on TimeoutException catch (_) {

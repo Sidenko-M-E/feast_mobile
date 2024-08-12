@@ -16,7 +16,7 @@ class Map extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
-      options: MapOptions(
+      options: const MapOptions(
         //Центр Барнаула
         initialCenter: LatLng(
           53.3451806,
@@ -52,7 +52,7 @@ class Map extends StatelessWidget {
                 radius: 10,
                 backgroundColor: Colors.green.shade900,
                 foregroundColor: Colors.white,
-                child: Text('А'),
+                child: const Text('А'),
               ),
             ),
           ),
@@ -66,7 +66,7 @@ class Map extends StatelessWidget {
                 radius: 10,
                 backgroundColor: Colors.green.shade900,
                 foregroundColor: Colors.white,
-                child: Text('Б'),
+                child: const Text('Б'),
               ),
             ),
           ),

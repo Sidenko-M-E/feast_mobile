@@ -17,15 +17,15 @@ class ExitAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog.adaptive(
-      backgroundColor: Color.fromARGB(254, 238, 248, 255),
+      backgroundColor: const Color.fromARGB(254, 238, 248, 255),
       title: Text(title),
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500,
         color: Colors.black,
       ),
       content: Text(description),
-      contentTextStyle: TextStyle(
+      contentTextStyle: const TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w400,
         color: Colors.black,

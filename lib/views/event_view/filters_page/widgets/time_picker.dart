@@ -24,7 +24,7 @@ class TimePicker extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(time, style: Theme.of(context).textTheme.labelMedium),
-              Icon(Icons.arrow_drop_down)
+              const Icon(Icons.arrow_drop_down)
             ],
           )),
     );

@@ -36,10 +36,11 @@ class FiltersPage extends StatelessWidget {
                       goRouter.pop();
                     },
                   );
-                } else
+                } else {
                   goRouter.pop();
+                }
               },
-              icon: Icon(Icons.arrow_back)),
+              icon: const Icon(Icons.arrow_back)),
           scrolledUnderElevation: 0.0,
           backgroundColor: Colors.white,
           centerTitle: false,
@@ -50,8 +51,9 @@ class FiltersPage extends StatelessWidget {
               textDirection: TextDirection.rtl,
               child: TextButton.icon(
                   onPressed: () => eventVM.resetFilters(),
-                  label: Text('Сбросить', style: TextStyle(color: Colors.blue)),
-                  icon: Icon(Icons.replay_rounded, color: Colors.blue)),
+                  label: const Text('Сбросить',
+                      style: TextStyle(color: Colors.blue)),
+                  icon: const Icon(Icons.replay_rounded, color: Colors.blue)),
             )
           ],
         ),
@@ -62,7 +64,7 @@ class FiltersPage extends StatelessWidget {
             children: [
               Text('Категории', style: Theme.of(context).textTheme.labelLarge),
               eventVM.categoryLoading
-                  ? Flexible(
+                  ? const Flexible(
                       flex: 1,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -96,14 +98,14 @@ class FiltersPage extends StatelessWidget {
                                     onPressed: () {
                                       eventVM.getCategories();
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Загрузить',
                                       style: TextStyle(fontSize: 14),
                                     )),
                               )
                             ],
                           ))
-                      : eventVM.existingCategories.length > 0
+                      : eventVM.existingCategories.isNotEmpty
                           ? Flexible(
                               flex: 1,
                               child: CategoryGrid(
@@ -131,14 +133,14 @@ class FiltersPage extends StatelessWidget {
                                         onPressed: () {
                                           eventVM.getCategories();
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Загрузить',
                                           style: TextStyle(fontSize: 14),
                                         )),
                                   )
                                 ],
                               )),
-              Divider(),
+              const Divider(),
               Flexible(
                 flex: 1,
                 child: Column(
@@ -208,8 +210,9 @@ class FiltersPage extends StatelessWidget {
                   if (eventVM.filtersChanged()) {
                     eventVM.applyFiltersChanges();
                     goRouter.go('/event_list');
-                  } else
+                  } else {
                     goRouter.go('/event_list');
+                  }
                 },
               )
             ],
@@ -260,7 +263,7 @@ Future<TimeOfDay?> showMyTimePicker(BuildContext context) {
     confirmText: 'ОК',
     hourLabelText: 'Часы',
     minuteLabelText: 'Минуты',
-    initialTime: TimeOfDay(hour: 0, minute: 0),
+    initialTime: const TimeOfDay(hour: 0, minute: 0),
     initialEntryMode: TimePickerEntryMode.dial,
     builder: (BuildContext context, Widget? child) {
       return Theme(

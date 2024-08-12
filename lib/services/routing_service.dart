@@ -14,8 +14,8 @@ abstract class RoutingService {
     final Response response = await http.post(Uri.http(baseUrl, '/find_route'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(<String, String?>{
-          "source": "$startAddress",
-          "target": "$endAddress",
+          "source": startAddress,
+          "target": endAddress,
           "route_type": type == RouteType.walk ? "walk" : "drive"
         }));
 
@@ -28,7 +28,7 @@ abstract class RoutingService {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(<String, String?>{
           "source": "${startAddress.latitude}, ${startAddress.longitude}",
-          "target": "$endAddress",
+          "target": endAddress,
           "route_type": type == RouteType.walk ? "walk" : "drive"
         }));
 
@@ -40,8 +40,8 @@ abstract class RoutingService {
     final Response response = await http.post(Uri.http(baseUrl, '/find_route'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(<String, String?>{
-          "source": "$startAddress",
-          "target": "$endAddress",
+          "source": startAddress,
+          "target": endAddress,
           "route_type": type == RouteType.walk ? "walk" : "drive"
         }));
 
@@ -54,7 +54,7 @@ abstract class RoutingService {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(<String, String?>{
           "source": "${startAddress.latitude}, ${startAddress.longitude}",
-          "target": "$endAddress",
+          "target": endAddress,
           "route_type": type == RouteType.walk ? "walk" : "drive"
         }));
 

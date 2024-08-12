@@ -35,7 +35,7 @@ class RouteSwitch extends StatelessWidget {
                 color: selected ? Colors.blue.shade800 : Colors.grey.shade700,
                 size: 20,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text(caption)
             ],
           ),

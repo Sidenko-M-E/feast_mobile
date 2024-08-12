@@ -18,8 +18,8 @@ class SigninGoToSignupButton extends StatelessWidget {
               text: 'Нет аккаунта?',
               style: Theme.of(context).textTheme.labelLarge,
             ),
-            WidgetSpan(child: SizedBox(width: 10)),
-            TextSpan(
+            const WidgetSpan(child: SizedBox(width: 10)),
+            const TextSpan(
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

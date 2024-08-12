@@ -25,7 +25,7 @@ class SigninPageLayout extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               authVM.clearFields();
               goRouter.go('/profile');
@@ -40,12 +40,12 @@ class SigninPageLayout extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Image.asset('assets/png/house_gray.png'),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Text(
                     'Авторизация',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   AuthEmailInput(
                     initialValue: authVM.user.email,
                     errorText: authVM.emailError,
@@ -59,7 +59,7 @@ class SigninPageLayout extends StatelessWidget {
                       if (!hasFocus) authVM.emailChanged(null);
                     },
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   AuthPasswordInput(
                     initialValue: authVM.user.password,
                     passwordObscured: authVM.passwordObscured,
@@ -88,7 +88,7 @@ class SigninPageLayout extends StatelessWidget {
                           await routingVM
                               .getRouteEvents(authVM.user.accessToken);
                           eventVM.getLastRouteEvent(
-                              routingVM.routeEvents.length > 0
+                              routingVM.routeEvents.isNotEmpty
                                   ? routingVM.routeEvents.last
                                   : null);
                           goRouter.go('/profile/signin/success');
@@ -96,11 +96,11 @@ class SigninPageLayout extends StatelessWidget {
                       }
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   SigninGoToSignupButton(
                     onPressed: () {
                       authVM.clearFields();
-                      authVM.authMode = AuthMode.Signup;
+                      authVM.authMode = AuthMode.signup;
                       goRouter.go('/profile/signup');
                     },
                   )

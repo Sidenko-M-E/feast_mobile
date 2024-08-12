@@ -10,7 +10,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'text_theme.dart';
 
 void main() {
-  runApp(FeastMobileApp());
+  runApp(const FeastMobileApp());
 }
 
 class FeastMobileApp extends StatelessWidget {
@@ -26,12 +26,12 @@ class FeastMobileApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RoutingVM()),
       ],
       child: MaterialApp.router(
-        localizationsDelegates: [
+        localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: [
+        supportedLocales: const [
           Locale('en'),
           Locale('ru'),
         ],

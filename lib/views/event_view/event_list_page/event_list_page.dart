@@ -21,7 +21,7 @@ class EventListPage extends StatelessWidget {
         shadowColor: Colors.black,
         surfaceTintColor: Colors.blue,
         elevation: 3,
-        title: Text('Найдены мероприятия:',
+        title: const Text('Найдены мероприятия:',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
@@ -36,9 +36,7 @@ class EventListPage extends StatelessWidget {
           )
         ],
       ),
-      body: SafeArea(
-        child: EventsList()
-      ),
+      body: const SafeArea(child: EventsList()),
     );
   }
 }

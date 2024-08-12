@@ -24,7 +24,7 @@ class CategoryGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final eventVM = context.watch<EventVM>();
     return GridView.builder(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       itemBuilder: (context, index) {
         final thisCategory = existingCategories[index];
         final active = activeCategories.contains(thisCategory);
@@ -41,7 +41,7 @@ class CategoryGrid extends StatelessWidget {
         );
       },
       itemCount: existingCategories.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 20,

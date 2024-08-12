@@ -18,14 +18,14 @@ class SignUpButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: Colors.white,
           ),
           minimumSize: const Size.fromHeight(50),
         ),
-        child: Text(
+        child: const Text(
           'Зарегистрироваться',
         ));
   }

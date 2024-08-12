@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class RouteCard extends StatefulWidget {
   const RouteCard({
+    super.key,
     required this.routeInfo,
     this.onRouteButtonTap,
   });
@@ -24,7 +25,7 @@ class _RouteCardState extends State<RouteCard> {
     final bool carObscured =
         widget.routeInfo.timeLeft < widget.routeInfo.car.time;
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Row(
         children: [
           IconButton(
@@ -50,14 +51,14 @@ class _RouteCardState extends State<RouteCard> {
             children: [
               Text(
                 walkShowing
-                    ? '${doubleTimeToString(widget.routeInfo.walk.time)}'
-                    : '${doubleTimeToString(widget.routeInfo.car.time)}',
+                    ? doubleTimeToString(widget.routeInfo.walk.time)
+                    : doubleTimeToString(widget.routeInfo.car.time),
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               Text(
                 walkShowing
-                    ? '${doubleLengthToString(widget.routeInfo.walk.length)}'
-                    : '${doubleLengthToString(widget.routeInfo.car.length)}',
+                    ? doubleLengthToString(widget.routeInfo.walk.length)
+                    : doubleLengthToString(widget.routeInfo.car.length),
                 style: Theme.of(context).textTheme.labelMedium,
               )
             ],
@@ -67,12 +68,12 @@ class _RouteCardState extends State<RouteCard> {
             child: Container(
               child: walkShowing
                   ? walkObscured
-                      ? Text('Не успеваете!',
+                      ? const Text('Не успеваете!',
                           style: TextStyle(
                               color: Colors.red, fontWeight: FontWeight.w500))
                       : null
                   : carObscured
-                      ? Text('Не успеваете!',
+                      ? const Text('Не успеваете!',
                           style: TextStyle(
                               color: Colors.red, fontWeight: FontWeight.w500))
                       : null,
@@ -82,12 +83,12 @@ class _RouteCardState extends State<RouteCard> {
             onPressed: widget.onRouteButtonTap,
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.grey),
+                  side: const BorderSide(color: Colors.grey),
                   borderRadius: BorderRadius.circular(12)),
               backgroundColor: Colors.white,
               foregroundColor: Colors.blue,
             ),
-            child: Text(
+            child: const Text(
               'Маршрут',
               style: TextStyle(
                 fontSize: 12,

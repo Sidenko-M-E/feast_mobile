@@ -33,7 +33,7 @@ class RouteDetailsPage extends StatelessWidget {
             walkRouteShowing: routingVM.walkRouteShowing,
           ),
         ),
-        Divider(),
+        const Divider(),
         Flexible(
           flex: 1,
           child: Row(
@@ -62,7 +62,7 @@ class RouteDetailsPage extends StatelessWidget {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         Flexible(
             fit: FlexFit.tight,
             flex: 2,

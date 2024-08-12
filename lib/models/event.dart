@@ -64,7 +64,7 @@ String dateFormatter(DateTimeRange timeRange) {
         "${DateFormat.MMMMd('ru').format(timeRange.end)} ${DateFormat('Hm').format(timeRange.end)}";
   } else {
     startTime = "${DateFormat.MMMMd('ru').format(timeRange.start)} ${DateFormat('Hm').format(timeRange.start)}";
-    endTime = "${DateFormat('Hm').format(timeRange.end)}";
+    endTime = DateFormat('Hm').format(timeRange.end);
   }
-  return startTime + ' — ' + endTime;
+  return '$startTime — $endTime';
 }

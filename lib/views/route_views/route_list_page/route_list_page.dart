@@ -18,7 +18,7 @@ class RouteListPage extends StatelessWidget {
     EventVM eventVM = context.watch<EventVM>();
 
     if (!authVM.logedIn) {
-      return RequreLoginPlaceholder();
+      return const RequreLoginPlaceholder();
     } else {
       return Scaffold(
           backgroundColor: Colors.white,
@@ -29,7 +29,7 @@ class RouteListPage extends StatelessWidget {
             shadowColor: Colors.black,
             elevation: 3,
             scrolledUnderElevation: 0,
-            title: Text(
+            title: const Text(
               'Мой список',
               style: TextStyle(
                 fontSize: 18,
@@ -39,7 +39,7 @@ class RouteListPage extends StatelessWidget {
             ),
           ),
           body: routingVM.routesLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: Colors.blue,
                   ),
@@ -66,50 +66,50 @@ class RouteListPage extends StatelessWidget {
                                 routingVM
                                     .getRouteEvents(authVM.user.accessToken);
                                 eventVM.getLastRouteEvent(
-                                    routingVM.routeEvents.length > 0
+                                    routingVM.routeEvents.isNotEmpty
                                         ? routingVM.routeEvents.last
                                         : null);
                               },
-                              child: Text(
+                              child: const Text(
                                 'Попробовать снова',
                                 style: TextStyle(fontSize: 14),
                               )),
                         )
                       ],
                     )
-                  : routingVM.routeEvents.length > 0
+                  : routingVM.routeEvents.isNotEmpty
                       ? ListView.builder(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           itemCount: routingVM.routeEvents.length +
                               routingVM.routeInfos.length,
                           itemBuilder: (context, index) {
-                            final new_index = index ~/ 2;
+                            final newIndex = index ~/ 2;
                             if (index.isEven) {
                               return EventCard(
                                 startTime:
-                                    "${DateFormat.MMMMd('ru').format(routingVM.routeEvents[new_index].timeRange.start)} ${DateFormat('Hm').format(routingVM.routeEvents[new_index].timeRange.start)}",
+                                    "${DateFormat.MMMMd('ru').format(routingVM.routeEvents[newIndex].timeRange.start)} ${DateFormat('Hm').format(routingVM.routeEvents[newIndex].timeRange.start)}",
                                 endTime:
-                                    "${DateFormat.MMMMd('ru').format(routingVM.routeEvents[new_index].timeRange.end)} ${DateFormat('Hm').format(routingVM.routeEvents[new_index].timeRange.end)}",
+                                    "${DateFormat.MMMMd('ru').format(routingVM.routeEvents[newIndex].timeRange.end)} ${DateFormat('Hm').format(routingVM.routeEvents[newIndex].timeRange.end)}",
                                 address: routingVM
-                                    .routeEvents[new_index].place.address,
-                                name: routingVM.routeEvents[new_index].name,
+                                    .routeEvents[newIndex].place.address,
+                                name: routingVM.routeEvents[newIndex].name,
                                 onTap: () async {
-                                  await routingVM.setCurrentEvent(new_index);
+                                  await routingVM.setCurrentEvent(newIndex);
                                   goRouter.push('/routes_event_details');
                                 },
                               );
                             } else {
                               return RouteCard(
-                                routeInfo: routingVM.routeInfos[new_index],
+                                routeInfo: routingVM.routeInfos[newIndex],
                                 onRouteButtonTap: () async {
-                                  await routingVM.setCurrentRoute(new_index);
+                                  await routingVM.setCurrentRoute(newIndex);
                                   goRouter.push('/route_details');
                                 },
                               );
                             }
                           },
                         )
-                      : EmptyListPlaceholder());
+                      : const EmptyListPlaceholder());
     }
   }
 }

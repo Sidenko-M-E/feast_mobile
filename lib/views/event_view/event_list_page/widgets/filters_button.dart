@@ -15,10 +15,10 @@ class FiltersButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(15)),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Фильтры'),

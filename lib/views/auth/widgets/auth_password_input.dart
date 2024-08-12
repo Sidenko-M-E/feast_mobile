@@ -27,13 +27,13 @@ class AuthPasswordInput extends StatelessWidget {
           Text("Пароль", style: Theme.of(context).textTheme.labelLarge),
           if (errorText != null)
             Text(errorText!,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.w500,
                   fontSize: 12,
                 ))
         ]),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Focus(
           onFocusChange: onFocusChange,
           child: TextFormField(
@@ -44,16 +44,16 @@ class AuthPasswordInput extends StatelessWidget {
             maxLength: 32,
             obscureText: passwordObscured,
             decoration: InputDecoration(
-              counterStyle: TextStyle(fontSize: 0),
-              contentPadding: EdgeInsets.all(12),
+              counterStyle: const TextStyle(fontSize: 0),
+              contentPadding: const EdgeInsets.all(12),
               filled: true,
               fillColor: errorText != null ? Colors.red[100] : Colors.white,
               hintText: "Введите пароль",
               hintStyle: Theme.of(context).textTheme.labelSmall,
               suffixIcon: IconButton(
                 icon: passwordObscured
-                    ? Icon(Icons.visibility)
-                    : Icon(Icons.visibility_off),
+                    ? const Icon(Icons.visibility)
+                    : const Icon(Icons.visibility_off),
                 onPressed: onPasswordVisibilityChanged,
               ),
               enabledBorder: OutlineInputBorder(

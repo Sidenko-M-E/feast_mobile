@@ -21,12 +21,12 @@ class SuccessfullAuthPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Flexible(
-                child: Container(),
                 flex: 1,
+                child: Container(),
               ),
               Image.asset('assets/png/house_color.png'),
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 'Вы успешно вошли в систему',
                 style: TextStyle(
                   fontSize: 24,
@@ -34,8 +34,8 @@ class SuccessfullAuthPage extends StatelessWidget {
                 ),
               ),
               Flexible(
-                child: Container(),
                 flex: 2,
+                child: Container(),
               ),
             ],
           ),

@@ -25,7 +25,7 @@ class DatePicker extends StatelessWidget {
             children: [
               Text(date, style: Theme.of(context).textTheme.labelMedium),
               // SizedBox(width: 40),
-              Icon(Icons.arrow_drop_down)
+              const Icon(Icons.arrow_drop_down)
             ],
           )),
     );

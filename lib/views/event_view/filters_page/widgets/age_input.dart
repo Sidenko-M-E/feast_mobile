@@ -14,8 +14,8 @@ class AgeInput extends StatelessWidget {
       decoration: InputDecoration(
         hintText: 'Введите возраст',
         hintStyle: Theme.of(context).textTheme.labelSmall,
-        counterStyle: TextStyle(fontSize: 0),
-        prefixIcon: Icon(Icons.align_horizontal_left_rounded),
+        counterStyle: const TextStyle(fontSize: 0),
+        prefixIcon: const Icon(Icons.align_horizontal_left_rounded),
         filled: true,
         fillColor: Colors.white,
         enabledBorder: OutlineInputBorder(

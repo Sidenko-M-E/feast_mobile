@@ -26,7 +26,7 @@ class OtpPageLayout extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             otpVM.stopTimer();
             goRouter.go('/profile/signup');
@@ -40,16 +40,16 @@ class OtpPageLayout extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
               children: <Widget>[
-                Text('Введите код из почты ',
+                const Text('Введите код из почты ',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w500,
                     )),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 otpVM.codeSendError
                     ? OtpEmailLabelError(email: otpVM.user.email)
                     : OtpEmailLabel(email: otpVM.user.email),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 OtpCodeInput(
                   enabled: !otpVM.codeSendError,
                   errorText: otpVM.codeError,
@@ -57,7 +57,9 @@ class OtpPageLayout extends StatelessWidget {
                     if (await otpVM.verifyCode(p0)) {
                       authVM.setLogedIn(true);
                       await routingVM.getRouteEvents(authVM.user.accessToken);
-                      eventVM.getLastRouteEvent(routingVM.routeEvents.length > 0 ? routingVM.routeEvents.last : null);
+                      eventVM.getLastRouteEvent(routingVM.routeEvents.isNotEmpty
+                          ? routingVM.routeEvents.last
+                          : null);
                       goRouter.go('/profile/signup/otp/success');
                     }
                   },
@@ -70,7 +72,7 @@ class OtpPageLayout extends StatelessWidget {
                     }
                   },
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 OtpSignUpButton(
                     enabled: otpVM.signUpButtonEnabled,
                     onPressed: () {

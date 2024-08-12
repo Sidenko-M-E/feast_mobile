@@ -11,11 +11,11 @@ class Filters {
 
   resetFilters() {
     final DateTime now = DateTime.now();
-    this.categories.clear();
-    this.timeRange = DateTimeRange(
+    categories.clear();
+    timeRange = DateTimeRange(
         start: DateTime.utc(now.year, now.month, now.day, 0, 0, 0),
         end: DateTime.utc(now.year, now.month + 2, now.day, 23, 59, 0));
-    this.age = null;
+    age = null;
   }
 
   Filters(this.age, this.categories, this.timeRange);

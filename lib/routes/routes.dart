@@ -23,27 +23,27 @@ GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
   GoRoute(
       path: '/route_details',
       pageBuilder: (context, state) {
-        return NoTransitionPage(child: RouteDetailsPage());
+        return const NoTransitionPage(child: RouteDetailsPage());
       }),
   GoRoute(
       path: '/routes_event_details',
       pageBuilder: (context, state) {
-        return NoTransitionPage(child: RouteEventDetailsPage());
+        return const NoTransitionPage(child: RouteEventDetailsPage());
       }),
   GoRoute(
       path: '/event_route',
       pageBuilder: (context, state) {
-        return NoTransitionPage(child: EventRouteDetailsPage());
+        return const NoTransitionPage(child: EventRouteDetailsPage());
       }),
   GoRoute(
       path: '/event_details',
       pageBuilder: (context, state) {
-        return NoTransitionPage(child: EventDetailsPage());
+        return const NoTransitionPage(child: EventDetailsPage());
       }),
   GoRoute(
       path: '/event_filters',
       pageBuilder: (context, state) {
-        return NoTransitionPage(child: FiltersPage());
+        return const NoTransitionPage(child: FiltersPage());
       }),
   StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -56,44 +56,44 @@ GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
           GoRoute(
               path: '/event_list',
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: EventListPage()))
+                  const NoTransitionPage(child: EventListPage()))
         ]),
         StatefulShellBranch(routes: [
           GoRoute(
               path: '/routes',
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: RouteListPage())),
+                  const NoTransitionPage(child: RouteListPage())),
         ]),
         StatefulShellBranch(navigatorKey: shellNavigatorKeyProfile, routes: [
           GoRoute(
               path: '/profile',
               pageBuilder: (context, state) =>
-                  NoTransitionPage(child: ProfileBasePage()),
+                  const NoTransitionPage(child: ProfileBasePage()),
               routes: [
                 GoRoute(
                     path: 'signin',
                     pageBuilder: (context, state) =>
-                        NoTransitionPage(child: SigninPage()),
+                        const NoTransitionPage(child: SigninPage()),
                     routes: [
                       GoRoute(
                           path: 'success',
                           pageBuilder: (context, state) =>
-                              NoTransitionPage(child: SuccessfullAuthPage()))
+                              const NoTransitionPage(child: SuccessfullAuthPage()))
                     ]),
                 GoRoute(
                     path: 'signup',
                     pageBuilder: (context, state) =>
-                        NoTransitionPage(child: SignupPage()),
+                        const NoTransitionPage(child: SignupPage()),
                     routes: [
                       GoRoute(
                           path: 'otp',
                           pageBuilder: (context, state) =>
-                              NoTransitionPage(child: OTPPage()),
+                              const NoTransitionPage(child: OTPPage()),
                           routes: [
                             GoRoute(
                                 path: 'success',
                                 pageBuilder: (context, state) =>
-                                    NoTransitionPage(
+                                    const NoTransitionPage(
                                         child: SuccessfullAuthPage()))
                           ]),
                     ])
@@ -104,9 +104,9 @@ GoRouter goRouter = GoRouter(initialLocation: '/profile', routes: [
 
 class ScaffoldWithNestedNavigation extends StatelessWidget {
   const ScaffoldWithNestedNavigation({
-    Key? key,
+    super.key,
     required this.navigationShell,
-  }) : super(key: key);
+  });
   final StatefulNavigationShell navigationShell;
 
   void _goBranch(int index) {
@@ -124,7 +124,7 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
         elevation: 0,
         selectedIndex: navigationShell.currentIndex,
         indicatorColor: Colors.white,
-        destinations: [
+        destinations: const [
           NavigationDestination(
               icon: Icon(Icons.flag),
               selectedIcon: Icon(Icons.flag, color: Colors.blue),

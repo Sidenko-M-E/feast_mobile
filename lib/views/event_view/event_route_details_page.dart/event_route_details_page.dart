@@ -42,7 +42,7 @@ class EventRouteDetailsPage extends StatelessWidget {
         Flexible(
             flex: 3,
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               color: Colors.white,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -53,7 +53,7 @@ class EventRouteDetailsPage extends StatelessWidget {
                         : "Текущее местоположение",
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
-                  Icon(Icons.arrow_downward_rounded),
+                  const Icon(Icons.arrow_downward_rounded),
                   Text(
                     eventVM.selectedEvent.place.address,
                     style: Theme.of(context).textTheme.labelLarge,
@@ -61,7 +61,7 @@ class EventRouteDetailsPage extends StatelessWidget {
                 ],
               ),
             )),
-        Divider(),
+        const Divider(),
         Flexible(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +89,7 @@ class EventRouteDetailsPage extends StatelessWidget {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         Flexible(
             flex: 3,
             child: Row(
@@ -123,14 +123,14 @@ class EventRouteDetailsPage extends StatelessWidget {
                       eventVM.routeInfo.haveTimeForAuto) {
                     switch (await routingVM.addEventToRoutes(
                         authVM.user.accessToken, eventVM.selectedEvent)) {
-                      case OperationStatus.Success:
+                      case OperationStatus.success:
                         eventVM.getLastRouteEvent(eventVM.selectedEvent);
                         goRouter.go('/routes');
                         break;
-                      case OperationStatus.InternalError:
+                      case OperationStatus.internalError:
                         showInternalErrorDialog(context);
                         break;
-                      case OperationStatus.TokenError:
+                      case OperationStatus.tokenError:
                         showTokenErrorDialog(context, () {
                           eventVM.getLastRouteEvent(null);
                           goRouter.pop();
@@ -139,8 +139,9 @@ class EventRouteDetailsPage extends StatelessWidget {
                         });
                         break;
                     }
-                  } else
+                  } else {
                     showCantReachDialog(context);
+                  }
                 } else {
                   showUnAuthDialog(context);
                 }
@@ -157,9 +158,9 @@ class EventRouteDetailsPage extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.white,
-            title: Text('Ошибка!'),
+            title: const Text('Ошибка!'),
             titleTextStyle: Theme.of(context).textTheme.titleMedium,
-            content: Text('Вам потребуется повторная авторизация'),
+            content: const Text('Вам потребуется повторная авторизация'),
             contentTextStyle: Theme.of(context).textTheme.labelMedium,
             actionsAlignment: MainAxisAlignment.center,
             actions: [
@@ -168,7 +169,7 @@ class EventRouteDetailsPage extends StatelessWidget {
                       backgroundColor: Colors.grey.shade100,
                       foregroundColor: Colors.red.shade800),
                   onPressed: onPressed,
-                  child: Text('Хорошо')),
+                  child: const Text('Хорошо')),
             ],
           );
         });
@@ -180,9 +181,10 @@ class EventRouteDetailsPage extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.white,
-            title: Text('Ошибка!'),
+            title: const Text('Ошибка!'),
             titleTextStyle: Theme.of(context).textTheme.titleMedium,
-            content: Text('Не получилось добавить мероприятие. Проверьте качество связи'),
+            content: const Text(
+                'Не получилось добавить мероприятие. Проверьте качество связи'),
             contentTextStyle: Theme.of(context).textTheme.labelMedium,
             actionsAlignment: MainAxisAlignment.center,
             actions: [
@@ -193,7 +195,7 @@ class EventRouteDetailsPage extends StatelessWidget {
                   onPressed: () {
                     goRouter.pop();
                   },
-                  child: Text('Хорошо')),
+                  child: const Text('Хорошо')),
             ],
           );
         });
@@ -205,9 +207,9 @@ class EventRouteDetailsPage extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.white,
-            title: Text('Мероприятие нельзя добавить'),
+            title: const Text('Мероприятие нельзя добавить'),
             titleTextStyle: Theme.of(context).textTheme.titleMedium,
-            content: Text('Вы не успеваете на него!'),
+            content: const Text('Вы не успеваете на него!'),
             contentTextStyle: Theme.of(context).textTheme.labelMedium,
             actionsAlignment: MainAxisAlignment.spaceEvenly,
             actions: [
@@ -218,7 +220,7 @@ class EventRouteDetailsPage extends StatelessWidget {
                   onPressed: () {
                     goRouter.pop();
                   },
-                  child: Text('Хорошо')),
+                  child: const Text('Хорошо')),
             ],
           );
         });
@@ -230,9 +232,9 @@ class EventRouteDetailsPage extends StatelessWidget {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.white,
-            title: Text('Требуется регистрация'),
+            title: const Text('Требуется регистрация'),
             titleTextStyle: Theme.of(context).textTheme.titleMedium,
-            content: Text('Перейти на страницу регистрации?'),
+            content: const Text('Перейти на страницу регистрации?'),
             contentTextStyle: Theme.of(context).textTheme.labelMedium,
             actionsAlignment: MainAxisAlignment.spaceEvenly,
             actions: [
@@ -243,7 +245,7 @@ class EventRouteDetailsPage extends StatelessWidget {
                   onPressed: () {
                     goRouter.pop();
                   },
-                  child: Text('Позже')),
+                  child: const Text('Позже')),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey.shade100,
@@ -252,7 +254,7 @@ class EventRouteDetailsPage extends StatelessWidget {
                     goRouter.pop();
                     goRouter.go('/profile');
                   },
-                  child: Text('Перейти')),
+                  child: const Text('Перейти')),
             ],
           );
         });

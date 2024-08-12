@@ -25,7 +25,7 @@ class SignupPageLayout extends StatelessWidget {
           scrolledUnderElevation: 0,
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               authVM.clearFields();
               goRouter.go('/profile');
@@ -38,12 +38,12 @@ class SignupPageLayout extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Image.asset('assets/png/house_gray.png'),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Text(
                   'Регистрация',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 AuthNameInput(
                   initialValue: authVM.user.name,
                   errorText: authVM.nameError,
@@ -57,7 +57,7 @@ class SignupPageLayout extends StatelessWidget {
                     if (!hasFocus) authVM.nameChanged(null);
                   },
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 AuthEmailInput(
                   initialValue: authVM.user.email,
                   errorText: authVM.emailError,
@@ -71,7 +71,7 @@ class SignupPageLayout extends StatelessWidget {
                     if (!hasFocus) authVM.emailChanged(null);
                   },
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 AuthPasswordInput(
                   initialValue: authVM.user.password,
                   passwordObscured: authVM.passwordObscured,
@@ -89,7 +89,7 @@ class SignupPageLayout extends StatelessWidget {
                     authVM.passwordVisibilityChanged();
                   },
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 AuthSubmitButton(
                     label: 'Зарегистрироваться',
                     isEnabled: authVM.canContinue,
@@ -103,11 +103,11 @@ class SignupPageLayout extends StatelessWidget {
                         }
                       }
                     }),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 SignupGoToSigninButton(
                   onPressed: () {
                     authVM.clearFields();
-                    authVM.authMode = AuthMode.Singin;
+                    authVM.authMode = AuthMode.signin;
                     goRouter.go('/profile/signin');
                   },
                 )

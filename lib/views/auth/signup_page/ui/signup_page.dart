@@ -14,13 +14,13 @@ class SignupPage extends StatelessWidget {
     return authVM.loading
         ? Stack(
             children: [
-              AbsorbPointer(child: SignupPageLayout()),
+              const AbsorbPointer(child: SignupPageLayout()),
               Container(
                 width: double.infinity,
                 height: double.infinity,
                 color: Colors.grey[200]!.withOpacity(0.6),
               ),
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: Colors.blue,
                   strokeWidth: 5.0,
@@ -29,10 +29,10 @@ class SignupPage extends StatelessWidget {
             ],
           )
         : authVM.errorMessage == null
-            ? SignupPageLayout()
+            ? const SignupPageLayout()
             : Stack(
                 children: [
-                  AbsorbPointer(child: SignupPageLayout()),
+                  const AbsorbPointer(child: SignupPageLayout()),
                   Container(
                     width: double.infinity,
                     height: double.infinity,

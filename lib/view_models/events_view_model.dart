@@ -100,7 +100,7 @@ class EventVM extends ChangeNotifier {
         _filtersDup.timeRange.start.day == _filtersDup.timeRange.end.day &&
         (hour > _filtersDup.timeRange.end.hour ||
             hour == _filtersDup.timeRange.end.hour &&
-                minute > _filtersDup.timeRange.end.minute)))
+                minute > _filtersDup.timeRange.end.minute))) {
       _filtersDup.timeRange = DateTimeRange(
         start: DateTime.utc(
             _filtersDup.timeRange.start.year,
@@ -111,6 +111,7 @@ class EventVM extends ChangeNotifier {
             0),
         end: _filtersDup.timeRange.end,
       );
+    }
     notifyListeners();
   }
 
@@ -120,7 +121,7 @@ class EventVM extends ChangeNotifier {
         _filtersDup.timeRange.start.day == _filtersDup.timeRange.end.day &&
         (hour < _filtersDup.timeRange.start.hour ||
             hour == _filtersDup.timeRange.end.hour &&
-                minute < _filtersDup.timeRange.start.minute)))
+                minute < _filtersDup.timeRange.start.minute))) {
       _filtersDup.timeRange = DateTimeRange(
           start: _filtersDup.timeRange.start,
           end: DateTime.utc(
@@ -131,6 +132,7 @@ class EventVM extends ChangeNotifier {
             minute,
             0,
           ));
+    }
     notifyListeners();
   }
 
@@ -212,11 +214,10 @@ class EventVM extends ChangeNotifier {
     try {
       final List<Event> temp =
           await DBService.getEvents(_filters, eventPageIndex + 1);
-      if (temp.length > 0) {
+      if (temp.isNotEmpty) {
         eventPageIndex += 1;
         eventList.addAll(temp);
       }
-    } catch (e) {
     } finally {
       setLoading(false);
     }
@@ -304,11 +305,12 @@ class EventVM extends ChangeNotifier {
 
   resetFilters() {
     _filtersDup.resetFilters();
-    if (lastRouteEvent != null)
+    if (lastRouteEvent != null) {
       _filtersDup = _filtersDup.copyWith(
           timeRange: DateTimeRange(
               start: lastRouteEvent!.timeRange.end,
               end: _filtersDup.timeRange.end));
+    }
     controller.text = '';
     notifyListeners();
   }

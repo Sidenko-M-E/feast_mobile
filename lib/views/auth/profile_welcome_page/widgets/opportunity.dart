@@ -32,14 +32,14 @@ class Opportunity extends StatelessWidget {
               color: iconForegroundColor,
             ),
           )),
-      SizedBox(width: 15),
+      const SizedBox(width: 15),
       Flexible(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$title', style: Theme.of(context).textTheme.labelLarge),
+            Text(title, style: Theme.of(context).textTheme.labelLarge),
             Text(
-              '$description',
+              description,
               softWrap: true,
               maxLines: 2,
             ),

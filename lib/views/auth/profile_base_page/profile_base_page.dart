@@ -6,6 +6,6 @@ class ProfileBasePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProfileWelcomePage();
+    return const ProfileWelcomePage();
   }
 }

@@ -23,7 +23,7 @@ class OtpCodeInput extends StatelessWidget {
           Text("Код", style: Theme.of(context).textTheme.labelLarge),
           if (errorText != null)
             Text(errorText!,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w500,
                     fontSize: 12))

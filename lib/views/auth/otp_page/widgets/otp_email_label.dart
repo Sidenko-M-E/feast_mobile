@@ -23,15 +23,16 @@ class OtpEmailLabel extends StatelessWidget {
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: Colors.grey[700]
-                ),
+                  color: Colors.grey[700]),
               text: 'на',
             ),
             const WidgetSpan(child: SizedBox(width: 5)),
             TextSpan(
-              style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.w700, color: Colors.blue),
-              text: '${email}',
+              style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.blue),
+              text: email,
             ),
           ]),
         ),

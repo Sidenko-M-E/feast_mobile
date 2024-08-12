@@ -16,21 +16,21 @@ class ProfileWelcomePage extends StatelessWidget {
         child: Padding(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
       child: CustomScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
             child: Column(children: [
               Image.asset("assets/png/croud_grey.png"),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Регистрируйтесь и получайте больше возможностей',
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              SizedBox(height: 20),
-              Opportunity(
+              const SizedBox(height: 20),
+              const Opportunity(
                 title: 'Составляйте свой маршрут',
                 description:
                     'Подбирайте удоные мероприятия для себя и сохраняйте их в список',
@@ -38,7 +38,7 @@ class ProfileWelcomePage extends StatelessWidget {
                 iconBackgroundColor: Colors.amber,
                 iconForegroundColor: Colors.white,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Opportunity(
                 title: 'Синхронизация',
                 description:
@@ -50,16 +50,16 @@ class ProfileWelcomePage extends StatelessWidget {
               Expanded(child: Container()),
               SignUpButton(
                 onPressed: () {
-                  authVM.authMode = AuthMode.Signup;
+                  authVM.authMode = AuthMode.signup;
                   goRouter.go('/profile/signup');
                 },
               ),
               TextButton(
                   onPressed: () {
-                    authVM.authMode = AuthMode.Singin;
+                    authVM.authMode = AuthMode.signin;
                     goRouter.go('/profile/signin');
                   },
-                  child: Text(
+                  child: const Text(
                     'У меня уже есть аккаунт',
                     style: TextStyle(
                         fontSize: 14,

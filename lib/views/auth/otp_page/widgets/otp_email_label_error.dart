@@ -29,12 +29,12 @@ class OtpEmailLabelError extends StatelessWidget {
             ),
             const WidgetSpan(child: SizedBox(width: 5)),
             TextSpan(
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: Colors.blue,
               ),
-              text: '${email}',
+              text: email,
             ),
           ]),
         ),

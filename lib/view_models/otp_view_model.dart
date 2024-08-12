@@ -15,11 +15,11 @@ class OtpVM extends ChangeNotifier {
   OTPService? otpService = OTPService();
   late User user;
   int secondsLeft = 0;
-  String? codeError = null;
+  String? codeError;
   String enteredCode = '';
   bool signUpButtonEnabled = false;
   bool codeSendError = false;
-  ErrorMessage? errorMessage = null;
+  ErrorMessage? errorMessage;
 
   StreamSubscription<int>? tickerSubs;
 
@@ -66,20 +66,19 @@ class OtpVM extends ChangeNotifier {
     final code = otpService?.generateOTP();
     try {
       setLoading(true);
-      await EmailService
-          .sendEmail(To: user.email, OTP: code!)
-          .timeout(Duration(seconds: 3));
+      await EmailService.sendEmail(to: user.email, otp: code!)
+          .timeout(const Duration(seconds: 3));
       tickerSubs?.cancel();
       tickerSubs = Stream.periodic(const Duration(seconds: 1),
               (i) => OTPService.otpRequestCooldown - i - 1)
           .take(OTPService.otpRequestCooldown)
           .listen((secondsLeft) => timerTicked(secondsLeft));
 
-      this.signUpButtonEnabled = false;
-      this.codeSendError = false;
+      signUpButtonEnabled = false;
+      codeSendError = false;
     } catch (_) {
-      this.signUpButtonEnabled = false;
-      this.codeSendError = true;
+      signUpButtonEnabled = false;
+      codeSendError = true;
     } finally {
       setLoading(false);
     }
@@ -87,7 +86,7 @@ class OtpVM extends ChangeNotifier {
 
   Future<bool> verifyCode(String code) async {
     switch (otpService?.verifyOTP(code)) {
-      case OtpVerificationStatus.Valid:
+      case OtpVerificationStatus.valid:
         {
           try {
             setLoading(true);
@@ -96,12 +95,12 @@ class OtpVM extends ChangeNotifier {
             setLoading(false);
             return true;
           } on SignUpException catch (e) {
-            if (e.type == SignUpFailure.EmailAlreadyExists) {
+            if (e.type == SignUpFailure.emailAlreadyExists) {
               setErrorMessage(ErrorMessage(
                 title: 'Email уже занят',
                 description: 'Попробуйте другой email',
               ));
-            } else if (e.type == SignUpFailure.PhoneAlreadyExists) {
+            } else if (e.type == SignUpFailure.phoneAlreadyExists) {
               setErrorMessage(ErrorMessage(
                 title: 'Телефон уже занят',
                 description: 'Попробуйте другой номер',
@@ -132,10 +131,10 @@ class OtpVM extends ChangeNotifier {
             return false;
           }
         }
-      case OtpVerificationStatus.ValidTimesUp:
+      case OtpVerificationStatus.validTimesUp:
         setCodeError('Код устарел');
         return false;
-      case OtpVerificationStatus.Invalid:
+      case OtpVerificationStatus.invalid:
         setCodeError('Неверный код');
         return false;
       default:

@@ -21,7 +21,7 @@ class EventCard extends StatelessWidget {
         elevation: 5,
         surfaceTintColor: Colors.grey,
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -29,12 +29,12 @@ class EventCard extends StatelessWidget {
                 dateFormatter(event.timeRange),
                 style: Theme.of(context).textTheme.labelLarge,
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
                 event.name,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Icon(
@@ -42,9 +42,9 @@ class EventCard extends StatelessWidget {
                     size: 20,
                     color: Colors.grey[700],
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(
-                    '${event.place.address}',
+                    event.place.address,
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
@@ -52,9 +52,9 @@ class EventCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton.icon(
-                icon: Icon(
+                icon: const Icon(
                   Icons.check,
                   size: 15,
                 ),
@@ -68,7 +68,7 @@ class EventCard extends StatelessWidget {
                   minimumSize: const Size.fromHeight(40),
                 ),
                 onPressed: onButtonPressed,
-                label: Text('Построить маршрут'),
+                label: const Text('Построить маршрут'),
               )
             ],
           ),

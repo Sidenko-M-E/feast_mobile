@@ -12,37 +12,39 @@ class OTPService {
         length: 4, interval: otpRequestCooldown);
 
     _allowRequestTime = DateTime.fromMicrosecondsSinceEpoch(OTP.lastUsedTime)
-        .add(Duration(seconds: otpRequestCooldown))
+        .add(const Duration(seconds: otpRequestCooldown))
         .microsecondsSinceEpoch;
 
     return _validOTP;
   }
 
   bool canGenerateOTP() {
-    if (OTP.lastUsedTime == 0)
+    if (OTP.lastUsedTime == 0) {
       return true;
-    else {
+    } else {
       if (OTP.lastUsedTime.compareTo(_allowRequestTime) > 0) {
         return true;
-      } else
+      } else {
         return false;
+      }
     }
   }
 
   OtpVerificationStatus verifyOTP(String otp) {
     // Если код ещё не генерировали, то проверять нечего.
-    if (OTP.lastUsedTime == 0) return OtpVerificationStatus.Valid;
+    if (OTP.lastUsedTime == 0) return OtpVerificationStatus.valid;
 
     // Истек срок валидности
     if ((DateTime.now().microsecondsSinceEpoch - OTP.lastUsedTime) >
-        otpValidTimeInterval * 1000000)
-      return OtpVerificationStatus.ValidTimesUp;
+        otpValidTimeInterval * 1000000) {
+      return OtpVerificationStatus.validTimesUp;
+    }
 
     // Неверный код
-    if (_validOTP.compareTo(otp) != 0) return OtpVerificationStatus.Invalid;
+    if (_validOTP.compareTo(otp) != 0) return OtpVerificationStatus.invalid;
 
-    return OtpVerificationStatus.Valid;
+    return OtpVerificationStatus.valid;
   }
 }
 
-enum OtpVerificationStatus { Valid, ValidTimesUp, Invalid }
+enum OtpVerificationStatus { valid, validTimesUp, invalid }

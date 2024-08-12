@@ -16,7 +16,7 @@ class EventsList extends StatelessWidget {
     final eventVM = context.watch<EventVM>();
     final eventListLength = eventVM.eventList.length;
     if (eventVM.eventLoading) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(
           color: Colors.blue,
         ),
@@ -42,7 +42,7 @@ class EventsList extends StatelessWidget {
                 onPressed: () {
                   eventVM.getEvents();
                 },
-                child: Text(
+                child: const Text(
                   'Попробовать снова',
                   style: TextStyle(fontSize: 14),
                 )),
@@ -50,12 +50,12 @@ class EventsList extends StatelessWidget {
         ],
       );
     } else if (eventListLength == 0) {
-      return EmptyListPlaceholder();
+      return const EmptyListPlaceholder();
     } else {
       return ListView.builder(
         controller: eventVM.scrollController,
         shrinkWrap: true,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         itemCount: eventListLength,
         itemBuilder: (context, index) {
           final Event event = eventVM.eventList[index];
@@ -84,7 +84,7 @@ class EventsList extends StatelessWidget {
                   }
                 },
               ),
-              Divider(color: Colors.white)
+              const Divider(color: Colors.white)
             ],
           );
         },
@@ -100,9 +100,10 @@ Future<dynamic> showAccessDeniedDialog(
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Ошибка!'),
+          title: const Text('Ошибка!'),
           titleTextStyle: Theme.of(context).textTheme.titleMedium,
-          content: Text('Нельзя построить маршрут от текущего местоположения, не выдав разрешение сервису геолокации!'),
+          content: const Text(
+              'Нельзя построить маршрут от текущего местоположения, не выдав разрешение сервису геолокации!'),
           contentTextStyle: Theme.of(context).textTheme.labelMedium,
           actionsAlignment: MainAxisAlignment.center,
           actions: [
@@ -111,7 +112,7 @@ Future<dynamic> showAccessDeniedDialog(
                     backgroundColor: Colors.grey.shade100,
                     foregroundColor: Colors.red.shade800),
                 onPressed: onPressed,
-                child: Text('Хорошо')),
+                child: const Text('Хорошо')),
           ],
         );
       });

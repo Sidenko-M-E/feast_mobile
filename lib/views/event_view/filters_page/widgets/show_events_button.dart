@@ -12,7 +12,6 @@ class ShowEventsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text('Показать мероприятия'),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         foregroundColor: Colors.white,
@@ -20,6 +19,7 @@ class ShowEventsButton extends StatelessWidget {
         textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         minimumSize: const Size.fromHeight(50),
       ),
+      child: const Text('Показать мероприятия'),
     );
   }
 }
