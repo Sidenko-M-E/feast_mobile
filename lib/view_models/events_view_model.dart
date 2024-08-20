@@ -241,11 +241,8 @@ class EventVM extends ChangeNotifier {
     _existingCategories = categories;
   }
 
-  setSelectedEvent(Event selectedEvent) async {
-    _selectedEvent = selectedEvent;
+  setRouteToSelectedEvent() async {
     routeBuildingInProgress = true;
-    notifyListeners();
-
     if (lastRouteEvent == null) {
       final Position userPos =
           await GeolocationService.determineCurrentPosition();
@@ -287,6 +284,11 @@ class EventVM extends ChangeNotifier {
       routeBuildingInProgress = false;
       notifyListeners();
     }
+  }
+
+  setSelectedEvent(Event selectedEvent) async {
+    _selectedEvent = selectedEvent;
+    notifyListeners();
   }
 
   getCategories() async {

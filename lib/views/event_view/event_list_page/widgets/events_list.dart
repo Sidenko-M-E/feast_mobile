@@ -3,7 +3,6 @@ import 'package:feast_mobile/views/event_view/event_list_page/widgets/event_card
 import 'package:feast_mobile/view_models/events_view_model.dart';
 import 'package:feast_mobile/models/event.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'empty_list_placeholder.dart';
@@ -64,19 +63,14 @@ class EventsList extends StatelessWidget {
               EventCard(
                 event: event,
                 onTap: () async {
-                  try {
-                    await eventVM.setSelectedEvent(event);
-                    context.push('/event_details');
-                  } catch (_) {
-                    showAccessDeniedDialog(context, () {
-                      goRouter.pop();
-                    });
-                  }
+                  await eventVM.setSelectedEvent(event);
+                  goRouter.push('/event_details');
                 },
                 onButtonPressed: () async {
                   try {
                     await eventVM.setSelectedEvent(event);
-                    context.push('/event_route');
+                    await eventVM.setRouteToSelectedEvent();
+                    goRouter.push('/event_route');
                   } catch (_) {
                     showAccessDeniedDialog(context, () {
                       goRouter.pop();

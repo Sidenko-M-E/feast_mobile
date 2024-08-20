@@ -8,7 +8,7 @@ import 'package:http/http.dart';
 
 abstract class DBService {
   static const Duration timeoutDuration = Duration(seconds: 5);
-  static const String baseUrl = '10.0.2.2:8080';
+  static const String baseUrl = '80.249.146.190:8080';
 
   static Future<List<Event>> getRouteEvents(String authToken) async {
     final Response res = await http.get(Uri.http(baseUrl, '/route'), headers: {

@@ -13,6 +13,7 @@ class EventDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final eventVM = context.watch<EventVM>();
     final selectedEvent = context.watch<EventVM>().selectedEvent;
 
     return Scaffold(
@@ -99,8 +100,10 @@ class EventDetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Категории:'),
-                        Text(
-                            selectedEvent.categories.map((CategoryModel e) => e.name.toString()).toList().join(' | '))
+                        Text(selectedEvent.categories
+                            .map((CategoryModel e) => e.name.toString())
+                            .toList()
+                            .join(' | '))
                       ],
                     ),
                   ],
@@ -174,8 +177,15 @@ class EventDetailsPage extends StatelessWidget {
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 minimumSize: const Size.fromHeight(50),
               ),
-              onPressed: () {
-                goRouter.push('/event_route');
+              onPressed: () async {
+                try {
+                  await eventVM.setRouteToSelectedEvent();
+                  goRouter.push('/event_route');
+                } catch (_) {
+                  showAccessDeniedDialog(context, () {
+                    goRouter.pop();
+                  });
+                }
               },
               label: const Text('Построить маршрут'),
             )
@@ -184,4 +194,29 @@ class EventDetailsPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<dynamic> showAccessDeniedDialog(
+    BuildContext context, void Function()? onPressed) {
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: const Text('Ошибка!'),
+          titleTextStyle: Theme.of(context).textTheme.titleMedium,
+          content: const Text(
+              'Нельзя построить маршрут от текущего местоположения, не выдав разрешение сервису геолокации!'),
+          contentTextStyle: Theme.of(context).textTheme.labelMedium,
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey.shade100,
+                    foregroundColor: Colors.red.shade800),
+                onPressed: onPressed,
+                child: const Text('Хорошо')),
+          ],
+        );
+      });
 }
